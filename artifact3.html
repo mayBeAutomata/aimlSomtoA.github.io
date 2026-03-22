@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artifact 3: Solar Energy Prediction with ML | Somto Dera Anyaegbu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #15803D;
+      --accent-mid: #16A34A;
+      --accent-light: #22C55E;
+      --accent-pale: #F0FDF4;
+      --accent-border: rgba(21, 128, 61, 0.2);
+      --amber: #B45309;
+      --amber-pale: #FFFBEB;
+      --bg: #FAFAFA;
+      --surface: #FFFFFF;
+      --border: #E5E7EB;
+      --text-primary: #111827;
+      --text-secondary: #6B7280;
+      --text-muted: #9CA3AF;
+      --font: 'Inter', system-ui, sans-serif;
+      --font-display: 'Playfair Display', Georgia, serif;
+    }
+
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); line-height: 1.7; font-size: 16px; }
+
+    /* topbar */
+    .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-secondary); font-size: 13px; font-weight: 500; transition: color 0.2s; }
+    .back-link:hover { color: var(--accent); }
+    .topbar-badge { font-size: 11px; font-weight: 600; color: var(--accent); background: var(--accent-pale); border: 1px solid var(--accent-border); border-radius: 20px; padding: 3px 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* hero */
+    .hero { background: linear-gradient(135deg, #052E16 0%, #14532D 50%, #052E16 100%); padding: 72px 40px 64px; color: white; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 65% 50%, rgba(234,179,8,0.12) 0%, transparent 60%); }
+    .hero-content { position: relative; max-width: 800px; }
+    .hero-eyebrow { font-size: 11px; font-weight: 600; color: #86EFAC; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+    .hero-eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: #86EFAC; }
+    .hero h1 { font-family: var(--font-display); font-size: clamp(32px, 5vw, 52px); font-weight: 700; line-height: 1.15; color: #F9FAFB; margin-bottom: 20px; letter-spacing: -0.5px; }
+    .hero h1 span { color: #86EFAC; }
+    .hero-desc { font-size: 17px; color: #D1D5DB; max-width: 600px; line-height: 1.7; font-weight: 300; margin-bottom: 32px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 16px; }
+    .meta-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; font-size: 12px; color: #E5E7EB; }
+    .meta-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 64px 40px 80px; }
+
+    .section { margin-bottom: 64px; }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .section-num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: white; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .section-title { font-size: 13px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .section-heading { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; letter-spacing: -0.3px; }
+
+    /* problem/solution */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+    .card-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+    .card-label.problem { color: #DC2626; }
+    .card-label.solution { color: var(--accent); }
+    .card-text { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+
+    /* pipeline flow */
+    .pipeline { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 36px; }
+    .pipe-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; position: relative; }
+    .pipe-step { display: flex; flex-direction: column; align-items: center; padding: 0 8px; position: relative; }
+    .pipe-step:not(:last-child)::after { content: '→'; position: absolute; right: -10px; top: 26px; font-size: 18px; color: var(--text-muted); z-index: 1; }
+    .pipe-icon { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 12px; border: 1.5px solid; }
+    .pipe-label { font-size: 12px; font-weight: 600; color: var(--text-primary); text-align: center; line-height: 1.3; margin-bottom: 6px; }
+    .pipe-sub { font-size: 11px; color: var(--text-secondary); text-align: center; line-height: 1.4; }
+
+    /* models comparison */
+    .models-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .model-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px; position: relative; overflow: hidden; }
+    .model-card.best { border-color: var(--accent-border); }
+    .model-card.best::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+    .model-best-badge { position: absolute; top: 14px; right: 14px; font-size: 10px; font-weight: 600; color: var(--accent); background: var(--accent-pale); border: 1px solid var(--accent-border); border-radius: 10px; padding: 2px 8px; letter-spacing: 0.05em; }
+    .model-icon { font-size: 24px; margin-bottom: 12px; }
+    .model-name { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .model-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 14px; }
+    .model-stat { display: flex; justify-content: space-between; padding: 6px 0; border-top: 1px solid var(--border); }
+    .model-stat-label { font-size: 12px; color: var(--text-muted); }
+    .model-stat-val { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+
+    /* feature bar chart */
+    .feature-chart { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+    .feature-row { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+    .feature-row:last-child { margin-bottom: 0; }
+    .feature-name { font-size: 13px; color: var(--text-secondary); width: 160px; flex-shrink: 0; }
+    .feature-bar-wrap { flex: 1; height: 10px; background: #F3F4F6; border-radius: 5px; overflow: hidden; }
+    .feature-bar { height: 100%; border-radius: 5px; background: var(--accent); }
+    .feature-val { font-size: 12px; font-weight: 600; color: var(--text-muted); width: 40px; text-align: right; flex-shrink: 0; }
+
+    /* insights */
+    .insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .insight-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px; display: flex; gap: 14px; align-items: flex-start; }
+    .insight-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .insight-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; }
+    .insight-text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* tech stack */
+    .stack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .stack-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 18px; display: flex; align-items: center; gap: 14px; }
+    .stack-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .stack-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    .stack-role { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+    /* outcome */
+    .outcome-box { background: #052E16; border-radius: 12px; padding: 40px; color: white; position: relative; overflow: hidden; }
+    .outcome-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #16A34A 0%, #86EFAC 100%); }
+    .outcome-heading { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: #F9FAFB; margin-bottom: 16px; }
+    .outcome-text { font-size: 15px; color: #D1D5DB; line-height: 1.75; font-weight: 300; margin-bottom: 28px; }
+    .outcome-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; }
+    .metric { text-align: center; }
+    .metric-val { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: #86EFAC; line-height: 1; margin-bottom: 6px; }
+    .metric-label { font-size: 12px; color: #9CA3AF; line-height: 1.4; }
+
+    .page-footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); background: var(--surface); }
+    .page-footer p { font-size: 13px; color: var(--text-muted); }
+    .page-footer a { color: var(--accent); text-decoration: none; }
+    .page-footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .topbar, main { padding-left: 20px; padding-right: 20px; }
+      .hero { padding: 48px 20px; }
+      .two-col, .insights-grid, .stack-grid, .models-grid { grid-template-columns: 1fr; }
+      .pipe-steps { grid-template-columns: 1fr; }
+      .pipe-step:not(:last-child)::after { content: '↓'; right: auto; top: auto; bottom: -16px; left: 50%; transform: translateX(-50%); }
+      .outcome-metrics { grid-template-columns: 1fr; gap: 16px; }
+      .feature-name { width: 110px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link">← Back to Portfolio</a>
+  <span class="topbar-badge">Artifact 3 · ECGR-5090</span>
+</div>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Artifact 3 — Machine Learning · UNC Charlotte</div>
+    <h1><span>Solar Energy Prediction</span><br/>Using ML Algorithms</h1>
+    <p class="hero-desc">
+      Implementing, tuning, and comparing multiple machine learning algorithms to predict solar energy availability from weather features — combining data analysis, model selection, and optimization to tackle a real-world renewable energy problem.
+    </p>
+    <div class="hero-meta">
+      <div class="meta-pill"><div class="meta-dot" style="background:#86EFAC"></div>Regression &amp; Prediction</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#FCD34D"></div>Python · scikit-learn</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#93C5FD"></div>Data Analysis · Model Tuning</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#F9A8D4"></div>Fall 2021</div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- 1. Problem & Solution -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">Context</div>
+        <div class="section-heading">Problem &amp; Solution</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label problem">⚠ The Problem</div>
+        <p class="card-text">
+          Solar energy output is highly variable — clouds, humidity, temperature, and sunlight hours all affect generation. Grid operators and energy planners need accurate forecasts to balance supply and demand. Traditional methods struggle with the non-linear relationships between weather variables and energy output.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-label solution">✓ The Solution</div>
+        <p class="card-text">
+          Train, tune, and systematically compare multiple ML regression models on real weather datasets to find the best-performing algorithm for solar energy prediction. The goal: a model that is accurate, generalizable, and interpretable enough to be trusted in an energy planning context.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ML Pipeline -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">Architecture</div>
+        <div class="section-heading">The ML Pipeline</div>
+      </div>
+    </div>
+    <div class="pipeline">
+      <div class="pipe-steps">
+        <div class="pipe-step">
+          <div class="pipe-icon" style="background:#FFFBEB; border-color:#FDE68A;">☀️</div>
+          <div class="pipe-label">Data Collection</div>
+          <div class="pipe-sub">Weather &amp; solar output dataset</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-icon" style="background:#EFF6FF; border-color:#BFDBFE;">🔍</div>
+          <div class="pipe-label">Preprocessing</div>
+          <div class="pipe-sub">Cleaning, normalisation, feature selection</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-icon" style="background:var(--accent-pale); border-color:var(--accent-border);">⚙️</div>
+          <div class="pipe-label">Model Training</div>
+          <div class="pipe-sub">Multiple algorithms fitted on training split</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-icon" style="background:#F5F3FF; border-color:#DDD6FE;">🎯</div>
+          <div class="pipe-label">Tuning</div>
+          <div class="pipe-sub">Hyperparameter search &amp; cross-validation</div>
+        </div>
+        <div class="pipe-step">
+          <div class="pipe-icon" style="background:#FEF2F2; border-color:#FECACA;">📊</div>
+          <div class="pipe-label">Evaluation</div>
+          <div class="pipe-sub">RMSE, R² score comparison on test set</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Key Weather Features -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">Feature Analysis</div>
+        <div class="section-heading">Key Predictive Weather Features</div>
+      </div>
+    </div>
+    <div class="feature-chart">
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:20px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase;">Relative Feature Importance for Solar Output Prediction</div>
+      <div class="feature-row">
+        <div class="feature-name">Solar Irradiance (GHI)</div>
+        <div class="feature-bar-wrap"><div class="feature-bar" style="width:95%"></div></div>
+        <div class="feature-val">High</div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-name">Sunshine Duration</div>
+        <div class="feature-bar-wrap"><div class="feature-bar" style="width:84%"></div></div>
+        <div class="feature-val">High</div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-name">Temperature</div>
+        <div class="feature-bar-wrap"><div class="feature-bar" style="width:70%"></div></div>
+        <div class="feature-val">Med</div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-name">Cloud Cover</div>
+        <div class="feature-bar-wrap"><div class="feature-bar" style="width:65%"></div></div>
+        <div class="feature-val">Med</div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-name">Humidity</div>
+        <div class="feature-bar-wrap"><div class="feature-bar" style="width:48%"></div></div>
+        <div class="feature-val">Mod</div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-name">Wind Speed</div>
+        <div class="feature-bar-wrap"><div class="feature-bar" style="width:28%"></div></div>
+        <div class="feature-val">Low</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Models Compared -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">Comparison</div>
+        <div class="section-heading">ML Algorithms Evaluated</div>
+      </div>
+    </div>
+    <div class="models-grid">
+      <div class="model-card best">
+        <div class="model-best-badge">Best Performer</div>
+        <div class="model-icon">🌲</div>
+        <div class="model-name">Random Forest</div>
+        <div class="model-desc">Ensemble of decision trees with bagging. Handles non-linear relationships and feature interactions naturally — strong candidate for tabular weather data.</div>
+        <div class="model-stat"><span class="model-stat-label">Overfitting Risk</span><span class="model-stat-val" style="color:var(--accent)">Low</span></div>
+        <div class="model-stat"><span class="model-stat-label">Interpretability</span><span class="model-stat-val">Medium</span></div>
+      </div>
+      <div class="model-card">
+        <div class="model-icon">📈</div>
+        <div class="model-name">Linear Regression</div>
+        <div class="model-desc">Establishes a linear baseline. Interpretable and fast but limited by the assumption of linear relationships between weather features and solar output.</div>
+        <div class="model-stat"><span class="model-stat-label">Overfitting Risk</span><span class="model-stat-val" style="color:var(--accent)">Very Low</span></div>
+        <div class="model-stat"><span class="model-stat-label">Interpretability</span><span class="model-stat-val">High</span></div>
+      </div>
+      <div class="model-card">
+        <div class="model-icon">📐</div>
+        <div class="model-name">Support Vector Regression</div>
+        <div class="model-desc">Uses kernel trick to handle non-linear data. Effective in high-dimensional spaces but sensitive to feature scaling and kernel choice.</div>
+        <div class="model-stat"><span class="model-stat-label">Overfitting Risk</span><span class="model-stat-val">Medium</span></div>
+        <div class="model-stat"><span class="model-stat-label">Interpretability</span><span class="model-stat-val">Low</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Key Insights -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">Reflection</div>
+        <div class="section-heading">Key Insights</div>
+      </div>
+    </div>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-icon" style="background:var(--accent-pale);">🌿</div>
+        <div>
+          <div class="insight-title">No Single Best Algorithm — Context Decides</div>
+          <div class="insight-text">Random Forest outperformed on accuracy, but Linear Regression offered better explainability. In energy planning contexts, interpretability matters as much as raw performance — stakeholders need to trust and understand the model's predictions.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#FFFBEB;">⚡</div>
+        <div>
+          <div class="insight-title">Feature Engineering Moves the Needle</div>
+          <div class="insight-text">Selecting only the most informative weather features — and properly normalizing them — had a bigger impact on model performance than algorithm choice alone. Good data preparation is 80% of the work in real ML projects.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#EFF6FF;">📉</div>
+        <div>
+          <div class="insight-title">Overfitting Is a Real-World Problem</div>
+          <div class="insight-text">Models that performed well on training data often failed to generalize. Cross-validation and careful hyperparameter tuning were essential to building a model that would actually work on new weather data — not just the data it had seen.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#F5F3FF;">🔗</div>
+        <div>
+          <div class="insight-title">ML Bridges Engineering and Energy</div>
+          <div class="insight-text">This project directly connected my electrical engineering background with machine learning — predicting physical system outputs from sensor data is exactly what ML does well. The same framework applies to predictive maintenance, fault detection, and control system optimization at Cummins.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Tech Stack -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div>
+        <div class="section-title">Implementation</div>
+        <div class="section-heading">Technology Stack</div>
+      </div>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-card">
+        <div class="stack-icon" style="background:var(--accent-pale);">🐍</div>
+        <div>
+          <div class="stack-name">Python 3</div>
+          <div class="stack-role">Core implementation</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:#FFFBEB;">📓</div>
+        <div>
+          <div class="stack-name">Jupyter Notebook</div>
+          <div class="stack-role">Analysis &amp; visualisation</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:#EFF6FF;">🤖</div>
+        <div>
+          <div class="stack-name">scikit-learn</div>
+          <div class="stack-role">ML algorithms &amp; tuning</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:#F5F3FF;">📊</div>
+        <div>
+          <div class="stack-name">pandas &amp; NumPy</div>
+          <div class="stack-role">Data processing</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:#FEF2F2;">📉</div>
+        <div>
+          <div class="stack-name">matplotlib</div>
+          <div class="stack-role">Results visualisation</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:var(--accent-pale);">🐙</div>
+        <div>
+          <div class="stack-name">GitHub</div>
+          <div class="stack-role">Version control</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Outcome -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div>
+        <div class="section-title">Impact</div>
+        <div class="section-heading">What This Demonstrates</div>
+      </div>
+    </div>
+    <div class="outcome-box">
+      <div class="outcome-heading">Applied ML for Real-World Energy Systems</div>
+      <p class="outcome-text">
+        This project demonstrates my ability to apply the full machine learning workflow — from raw data to evaluated, tuned models — to a domain-relevant engineering problem. Predicting solar energy from weather data isn't just an academic exercise: it mirrors the kind of <strong>predictive analytics and sensor-driven modeling</strong> used in modern energy systems, industrial IoT, and smart grid applications.
+        <br/><br/>
+        As an Electronics Controls Engineer working on engine systems, the skills here — building regression models from sensor inputs, evaluating model generalizability, and selecting algorithms that balance accuracy with interpretability — map directly to <strong>predictive maintenance, fault detection, and AI-assisted calibration</strong> in embedded control environments.
+      </p>
+      <div class="outcome-metrics">
+        <div class="metric">
+          <div class="metric-val">3</div>
+          <div class="metric-label">ML algorithms<br/>implemented &amp; compared</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">6</div>
+          <div class="metric-label">Weather features<br/>analysed</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">✓</div>
+          <div class="metric-label">Cross-validation<br/>applied throughout</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="page-footer">
+  <p>Somto Dera Anyaegbu · ECGR-5090 Machine Learning · UNC Charlotte · Fall 2021</p>
+  <p style="margin-top:6px"><a href="index.html">← Return to Portfolio</a> &nbsp;|&nbsp; <a href="https://github.com/mayBeAutomata/ECGR5090-Machine-Learning/tree/main/project" target="_blank">View Source on GitHub →</a></p>
+</div>
+
+</body>
+</html>
