@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>A-iButler — Car Issue Triage Assistant</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+      background: #F0F2F5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 720px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: #fff;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .logo {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: #FEF2F2;
+      border: 2px solid #F87171;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: #9B1C1C;
+      flex-shrink: 0;
+    }
+    .header-text h1 {
+      font-size: 20px; font-weight: 700; color: #1A202C;
+    }
+    .header-text p {
+      font-size: 13px; color: #718096; margin-top: 2px;
+    }
+    .urgency-legend {
+      margin-left: auto;
+      display: flex;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11px; color: #718096;
+    }
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+
+    /* ── Chat window ── */
+    .chat-window {
+      background: #fff;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      height: 520px;
+      overflow: hidden;
+    }
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .messages::-webkit-scrollbar { width: 4px; }
+    .messages::-webkit-scrollbar-track { background: transparent; }
+    .messages::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 4px; }
+
+    .msg { display: flex; gap: 10px; max-width: 88%; }
+    .msg.user { align-self: flex-end; flex-direction: row-reverse; }
+
+    .avatar {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .msg.bot .avatar  { background: #FEF2F2; color: #9B1C1C; border: 1px solid #F87171; }
+    .msg.user .avatar { background: #EDF2F7; color: #4A5568; border: 1px solid #CBD5E0; }
+
+    .bubble {
+      padding: 11px 15px;
+      border-radius: 14px;
+      font-size: 14px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+    .msg.bot .bubble {
+      background: #F7FAFC;
+      color: #2D3748;
+      border-bottom-left-radius: 4px;
+      border: 1px solid #E2E8F0;
+    }
+    .msg.user .bubble {
+      background: #9B1C1C;
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+
+    /* Typing dots */
+    .typing-dots {
+      display: flex; gap: 4px;
+      padding: 12px 15px;
+      align-items: center;
+    }
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #CBD5E0;
+      animation: bounce 1.2s infinite;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-6px); }
+    }
+
+    /* ── Input row ── */
+    .input-row {
+      display: flex;
+      gap: 10px;
+      padding: 14px 18px;
+      border-top: 1px solid #E2E8F0;
+      background: #FAFAFA;
+    }
+    .input-row input {
+      flex: 1;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #E2E8F0;
+      background: #fff;
+      font-size: 14px;
+      color: #2D3748;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    .input-row input:focus { border-color: #9B1C1C; }
+    .input-row input::placeholder { color: #A0AEC0; }
+    .send-btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      background: #9B1C1C;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .send-btn:hover:not(:disabled) { background: #7F1D1D; }
+    .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── Quick prompts ── */
+    .quick-prompts {
+      background: #fff;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+    .quick-prompts p {
+      font-size: 11px;
+      font-weight: 600;
+      color: #A0AEC0;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      padding: 6px 13px;
+      border-radius: 20px;
+      border: 1px solid #E2E8F0;
+      background: #F7FAFC;
+      font-size: 12px;
+      color: #4A5568;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    .chip:hover {
+      border-color: #9B1C1C;
+      color: #9B1C1C;
+      background: #FEF2F2;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      font-size: 10.5px;
+      color: #A0AEC0;
+    }
+
+    /* ── API key notice ── */
+    .api-notice {
+      background: #FFFBEB;
+      border: 1px solid #FCD34D;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #92400E;
+      display: none;
+    }
+    .api-notice.show { display: block; }
+  </style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">Ai</div>
+    <div class="header-text">
+      <h1>A-iButler</h1>
+      <p>Car Issue Triage Assistant — AIML-500 AI Lab</p>
+    </div>
+    <div class="urgency-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#E53E3E"></div>Urgent</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#D97706"></div>Soon</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#38A169"></div>Monitor</div>
+    </div>
+  </div>
+
+  <!-- API Key notice (shown if API call fails) -->
+  <div class="api-notice" id="apiNotice">
+    ⚠️ API connection issue. Make sure you're running this file through a server that proxies
+    the Anthropic API, or open it inside claude.ai where the API key is handled automatically.
+  </div>
+
+  <!-- Chat window -->
+  <div class="chat-window">
+    <div class="messages" id="messages"></div>
+    <div class="input-row">
+      <input
+        type="text"
+        id="userInput"
+        placeholder="Describe what your car is doing..."
+        autocomplete="off"
+      />
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <!-- Quick demo prompts -->
+  <div class="quick-prompts">
+    <p>Try a demo scenario</p>
+    <div class="chips">
+      <button class="chip" onclick="fillPrompt('My 2019 Toyota Camry makes a loud grinding noise when I brake')">🔴 Grinding brakes</button>
+      <button class="chip" onclick="fillPrompt('My check engine light came on this morning but the car drives fine')">🟡 Check engine light</button>
+      <button class="chip" onclick="fillPrompt('My car makes a squeaky noise when I turn the steering wheel slowly')">🟢 Squeaky steering</button>
+      <button class="chip" onclick="fillPrompt('Smoke is coming from under my hood while driving')">🔴 Smoke from hood</button>
+      <button class="chip" onclick="fillPrompt('How much will this repair cost?')">💬 Cost estimate test</button>
+      <button class="chip" onclick="fillPrompt('Who won the Super Bowl?')">💬 Off-topic test</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    A-iButler · AIML-500 AI Lab · Indiana Wesleyan University · March 2026 &nbsp;|&nbsp;
+    Built with Design Thinking · Powered by Claude (Anthropic)
+  </div>
+
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// SYSTEM PROMPT — Core intelligence of A-iButler
+// ─────────────────────────────────────────────────────────────
+const SYSTEM_PROMPT = `You are A-iButler, a friendly and knowledgeable car issue triage assistant.
+
+Your job is to help users describe vehicle symptoms and provide:
+  1. Likely issue category (engine, brakes, transmission, electrical, cooling, exhaust, or suspension/tires)
+  2. Urgency level:
+       🔴 URGENT — stop driving immediately, get towed or call for help
+       🟡 SOON   — get it checked within the next few days
+       🟢 MONITOR — keep an eye on it, not immediately dangerous
+  3. Suggested next diagnostic steps (e.g., check fluid levels, get OBD scan, visit a mechanic)
+
+How to behave:
+- Start by greeting the user warmly and asking for their vehicle's year, make, and model, plus the symptom they are experiencing.
+- Ask focused follow-up questions to narrow down the issue (e.g., "Does the noise happen only when braking, or while driving normally too?").
+- Once you have enough information, deliver a clear triage summary with labeled sections: Issue Category, Urgency Level, and Next Steps.
+- Be calm, warm, and reassuring. Do not alarm the user unnecessarily.
+- Format your triage summary clearly with the three labeled sections above.
+
+What NOT to do:
+- Never provide a definitive mechanical diagnosis — always use "likely" or "possible."
+- Never give repair cost estimates — these vary too much by location and shop.
+- Never guarantee safety — always advise consulting a qualified mechanic for physical inspection.
+- Never go off-topic beyond vehicle issues. If asked something unrelated, politely redirect.
+- Never ask for personal information beyond vehicle details.
+
+Always end your triage response with: "Is there anything else about this issue or another concern with your vehicle?"`;
+
+// ─────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────
+let history = [];
+let isTyping = false;
+
+// ─────────────────────────────────────────────────────────────
+// DOM HELPERS
+// ─────────────────────────────────────────────────────────────
+function addMessage(role, text) {
+  const container = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg ' + (role === 'user' ? 'user' : 'bot');
+
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar';
+  avatar.textContent = role === 'user' ? 'You' : 'Ai';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.textContent = text;
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function showTyping() {
+  const container = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.id = 'typing';
+  div.innerHTML = `
+    <div class="avatar">Ai</div>
+    <div class="bubble">
+      <div class="typing-dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+    </div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function removeTyping() {
+  const el = document.getElementById('typing');
+  if (el) el.remove();
+}
+
+function fillPrompt(text) {
+  document.getElementById('userInput').value = text;
+  document.getElementById('userInput').focus();
+}
+
+// ─────────────────────────────────────────────────────────────
+// API CALL
+// ─────────────────────────────────────────────────────────────
+async function callClaude(userMessage) {
+  if (userMessage) {
+    history.push({ role: 'user', content: userMessage });
+  }
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      system: SYSTEM_PROMPT,
+      messages: history
+    })
+  });
+
+  if (!response.ok) throw new Error('API error: ' + response.status);
+
+  const data = await response.json();
+  const reply = data.content && data.content[0]
+    ? data.content[0].text
+    : "I'm sorry, I couldn't generate a response. Please try again.";
+
+  history.push({ role: 'assistant', content: reply });
+  return reply;
+}
+
+// ─────────────────────────────────────────────────────────────
+// SEND MESSAGE
+// ─────────────────────────────────────────────────────────────
+async function sendMessage() {
+  if (isTyping) return;
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  addMessage('user', text);
+  isTyping = true;
+  document.getElementById('sendBtn').disabled = true;
+  showTyping();
+
+  try {
+    const reply = await callClaude(text);
+    removeTyping();
+    addMessage('bot', reply);
+    document.getElementById('apiNotice').classList.remove('show');
+  } catch (err) {
+    removeTyping();
+    document.getElementById('apiNotice').classList.add('show');
+    addMessage('bot', "I'm having trouble connecting right now. Please try again in a moment.");
+    console.error('A-iButler error:', err);
+  }
+
+  isTyping = false;
+  document.getElementById('sendBtn').disabled = false;
+  input.focus();
+}
+
+// Enter key to send
+document.getElementById('userInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) sendMessage();
+});
+
+// ─────────────────────────────────────────────────────────────
+// GREETING — auto-send on load
+// ─────────────────────────────────────────────────────────────
+(async () => {
+  isTyping = true;
+  document.getElementById('sendBtn').disabled = true;
+  showTyping();
+  try {
+    const greeting = await callClaude(null);
+    removeTyping();
+    addMessage('bot', greeting);
+  } catch (err) {
+    removeTyping();
+    addMessage('bot', "Hi there! I'm A-iButler, your car issue triage assistant. To get started, could you tell me your vehicle's year, make, and model — and describe the issue you're experiencing?");
+  }
+  isTyping = false;
+  document.getElementById('sendBtn').disabled = false;
+  document.getElementById('userInput').focus();
+})();
+</script>
+
+</body>
+</html>
