@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artifact 4: ML vs Deep Learning | Somto Dera Anyaegbu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #7C3AED;
+      --accent-mid: #8B5CF6;
+      --accent-light: #A78BFA;
+      --accent-pale: #F5F3FF;
+      --accent-border: rgba(124, 58, 237, 0.2);
+      --ml-color: #1D4ED8;
+      --ml-pale: #EFF6FF;
+      --ml-border: rgba(29, 78, 216, 0.2);
+      --dl-color: #B45309;
+      --dl-pale: #FFFBEB;
+      --dl-border: rgba(180, 83, 9, 0.2);
+      --bg: #FAFAFA;
+      --surface: #FFFFFF;
+      --border: #E5E7EB;
+      --text-primary: #111827;
+      --text-secondary: #6B7280;
+      --text-muted: #9CA3AF;
+      --font: 'Inter', system-ui, sans-serif;
+      --font-display: 'Playfair Display', Georgia, serif;
+    }
+
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); line-height: 1.7; font-size: 16px; }
+
+    /* topbar */
+    .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-secondary); font-size: 13px; font-weight: 500; transition: color 0.2s; }
+    .back-link:hover { color: var(--accent); }
+    .topbar-badge { font-size: 11px; font-weight: 600; color: var(--accent); background: var(--accent-pale); border: 1px solid var(--accent-border); border-radius: 20px; padding: 3px 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* hero */
+    .hero { background: linear-gradient(135deg, #1E1B4B 0%, #2E1065 50%, #1E1B4B 100%); padding: 72px 40px 64px; color: white; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 65% 50%, rgba(167,139,250,0.15) 0%, transparent 60%); }
+    .hero-content { position: relative; max-width: 800px; }
+    .hero-eyebrow { font-size: 11px; font-weight: 600; color: #C4B5FD; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+    .hero-eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: #C4B5FD; }
+    .hero h1 { font-family: var(--font-display); font-size: clamp(32px, 5vw, 52px); font-weight: 700; line-height: 1.15; color: #F9FAFB; margin-bottom: 20px; letter-spacing: -0.5px; }
+    .hero h1 span { color: #C4B5FD; }
+    .hero-desc { font-size: 17px; color: #D1D5DB; max-width: 640px; line-height: 1.7; font-weight: 300; margin-bottom: 32px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 16px; }
+    .meta-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; font-size: 12px; color: #E5E7EB; }
+    .meta-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 64px 40px 80px; }
+
+    .section { margin-bottom: 64px; }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .section-num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: white; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .section-title { font-size: 13px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .section-heading { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; letter-spacing: -0.3px; }
+
+    /* core thesis */
+    .thesis-box {
+      background: var(--accent-pale);
+      border: 1px solid var(--accent-border);
+      border-left: 4px solid var(--accent);
+      border-radius: 10px;
+      padding: 24px 28px;
+    }
+    .thesis-label { font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+    .thesis-text { font-size: 16px; color: var(--text-primary); line-height: 1.75; }
+    .thesis-text strong { color: var(--accent); }
+
+    /* case study cards */
+    .case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .case-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .case-card-header { padding: 22px 24px 18px; border-bottom: 1px solid var(--border); }
+    .case-type-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; margin-bottom: 12px; }
+    .case-card.ml .case-type-badge { background: var(--ml-pale); color: var(--ml-color); border: 1px solid var(--ml-border); }
+    .case-card.dl .case-type-badge { background: var(--dl-pale); color: var(--dl-color); border: 1px solid var(--dl-border); }
+    .case-card-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+    .case-card-title { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: var(--text-primary); line-height: 1.25; }
+    .case-card-sub { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+    .case-card-body { padding: 22px 24px; }
+    .case-detail { margin-bottom: 18px; }
+    .case-detail:last-child { margin-bottom: 0; }
+    .case-detail-label { font-size: 11px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+    .case-detail-text { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+    .case-detail-text strong { color: var(--text-primary); font-weight: 500; }
+    .case-stat { display: inline-flex; align-items: baseline; gap: 6px; margin-top: 8px; padding: 8px 14px; border-radius: 8px; }
+    .case-stat.ml-stat { background: var(--ml-pale); }
+    .case-stat.dl-stat { background: var(--dl-pale); }
+    .case-stat-num { font-family: var(--font-display); font-size: 22px; font-weight: 700; }
+    .ml-stat .case-stat-num { color: var(--ml-color); }
+    .dl-stat .case-stat-num { color: var(--dl-color); }
+    .case-stat-label { font-size: 12px; color: var(--text-secondary); }
+
+    /* why-not section */
+    .why-not-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .why-not-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px; }
+    .why-not-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .why-not-icon { font-size: 20px; }
+    .why-not-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    .why-not-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.06em; }
+    .why-not-badge.ml { background: var(--ml-pale); color: var(--ml-color); }
+    .why-not-badge.dl { background: var(--dl-pale); color: var(--dl-color); }
+    .why-not-text { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+
+    /* decision framework */
+    .decision-table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .decision-table th { padding: 14px 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; text-align: left; }
+    .decision-table th:first-child { background: #F9FAFB; color: var(--text-muted); width: 30%; }
+    .decision-table th.ml-th { background: var(--ml-pale); color: var(--ml-color); }
+    .decision-table th.dl-th { background: var(--dl-pale); color: var(--dl-color); }
+    .decision-table td { padding: 13px 20px; font-size: 13.5px; color: var(--text-secondary); border-top: 1px solid var(--border); vertical-align: top; line-height: 1.55; }
+    .decision-table td:first-child { font-weight: 500; color: var(--text-primary); background: #FAFAFA; }
+    .decision-table tr:hover td { background: #F9FAFB; }
+    .decision-table tr:hover td:first-child { background: #F3F4F6; }
+    .check { color: #15803D; font-weight: 600; }
+    .cross { color: #DC2626; font-weight: 600; }
+
+    /* insights */
+    .insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .insight-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px; display: flex; gap: 14px; align-items: flex-start; }
+    .insight-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .insight-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; }
+    .insight-text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* references */
+    .references { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+    .ref-item { font-size: 13px; color: var(--text-secondary); line-height: 1.7; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .ref-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .ref-item:first-child { padding-top: 0; }
+
+    /* outcome */
+    .outcome-box { background: #1E1B4B; border-radius: 12px; padding: 40px; color: white; position: relative; overflow: hidden; }
+    .outcome-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #7C3AED 0%, #C4B5FD 100%); }
+    .outcome-heading { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: #F9FAFB; margin-bottom: 16px; }
+    .outcome-text { font-size: 15px; color: #D1D5DB; line-height: 1.75; font-weight: 300; margin-bottom: 28px; }
+    .outcome-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; }
+    .metric { text-align: center; }
+    .metric-val { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: #C4B5FD; line-height: 1; margin-bottom: 6px; }
+    .metric-label { font-size: 12px; color: #9CA3AF; line-height: 1.4; }
+
+    .page-footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); background: var(--surface); }
+    .page-footer p { font-size: 13px; color: var(--text-muted); }
+    .page-footer a { color: var(--accent); text-decoration: none; }
+    .page-footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .topbar, main { padding-left: 20px; padding-right: 20px; }
+      .hero { padding: 48px 20px; }
+      .case-grid, .why-not-grid, .insights-grid { grid-template-columns: 1fr; }
+      .outcome-metrics { grid-template-columns: 1fr; gap: 16px; }
+      .decision-table { font-size: 12px; }
+      .decision-table td, .decision-table th { padding: 10px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link">← Back to Portfolio</a>
+  <span class="topbar-badge">Artifact 4 · AIML-500</span>
+</div>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Artifact 4 — AIML-500: Machine Learning Fundamentals · IWU</div>
+    <h1><span>ML vs. Deep Learning:</span><br/>Real-World Applications</h1>
+    <p class="hero-desc">
+      A comparative analysis of when traditional machine learning outperforms deep learning — and when it doesn't. Grounded in two real-world case studies: automated home valuation and AI-assisted colonoscopy polyp detection.
+    </p>
+    <div class="hero-meta">
+      <div class="meta-pill"><div class="meta-dot" style="background:#C4B5FD"></div>Academic Research Paper</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#6EE7B7"></div>ML vs Deep Learning</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#93C5FD"></div>APA 7th Edition</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#FCD34D"></div>March 2026 · IWU</div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- 1. Core Thesis -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">Thesis</div>
+        <div class="section-heading">The Central Argument</div>
+      </div>
+    </div>
+    <div class="thesis-box">
+      <div class="thesis-label">Core Finding</div>
+      <div class="thesis-text">
+        Machine learning and deep learning are not interchangeable — they excel at fundamentally different problem types. <strong>Traditional ML is the better choice for structured, tabular data</strong> where features are known and interpretability matters. <strong>Deep learning wins when data is unstructured</strong> — images, video, audio — and when discovering hidden patterns from raw input is more valuable than hand-crafted features. Selecting the wrong approach wastes resources, reduces trust, and limits real-world impact.
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Two Case Studies -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">Case Studies</div>
+        <div class="section-heading">Two Real-World Applications</div>
+      </div>
+    </div>
+    <div class="case-grid">
+
+      <!-- ML Case -->
+      <div class="case-card ml">
+        <div class="case-card-header">
+          <div class="case-type-badge">Traditional ML</div>
+          <span class="case-card-icon">🏠</span>
+          <div class="case-card-title">Automated Home Valuation</div>
+          <div class="case-card-sub">Linear Regression · Fannie Mae</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-detail">
+            <div class="case-detail-label">The Problem</div>
+            <div class="case-detail-text">Mortgage lenders need accurate, auditable estimates of home value based on property features — square footage, bedroom count, neighborhood, lot size — to approve loans and manage risk.</div>
+          </div>
+          <div class="case-detail">
+            <div class="case-detail-label">Why ML Works Here</div>
+            <div class="case-detail-text">Fannie Mae uses <strong>cross-sectional linear regression</strong> against transaction prices to determine the contribution of property attributes. The features are structured, tabular, and well-defined — exactly where linear regression excels. Lenders and underwriters can audit every coefficient.</div>
+          </div>
+          <div class="case-detail">
+            <div class="case-detail-label">Key Advantage</div>
+            <div class="case-detail-text"><strong>Interpretability.</strong> In a regulated industry, a model whose predictions can be explained and justified is often more valuable than a marginally more accurate black-box alternative.</div>
+          </div>
+          <div class="case-stat ml-stat">
+            <span class="case-stat-num">✓</span>
+            <span class="case-stat-label">Tabular data · Known features · Explainable outputs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DL Case -->
+      <div class="case-card dl">
+        <div class="case-card-header">
+          <div class="case-type-badge">Deep Learning</div>
+          <span class="case-card-icon">🏥</span>
+          <div class="case-card-title">Colonoscopy Polyp Detection</div>
+          <div class="case-card-sub">CNN · GI Genius · FDA Cleared</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-detail">
+            <div class="case-detail-label">The Problem</div>
+            <div class="case-detail-text">Colorectal cancer is highly preventable when polyps are detected early during colonoscopy. But polyps are small, subtle, and easy to miss in real-time video — a problem no manually-engineered feature set can reliably solve.</div>
+          </div>
+          <div class="case-detail">
+            <div class="case-detail-label">Why Deep Learning Works Here</div>
+            <div class="case-detail-text">The FDA-cleared <strong>GI Genius system</strong> uses a convolutional neural network (CNN) that learns low-level visual patterns — edges, textures, curves — directly from raw colonoscopy video frames, without hand-crafted features. The data is high-dimensional, complex, and visually variable.</div>
+          </div>
+          <div class="case-detail">
+            <div class="case-detail-label">Measured Outcome</div>
+            <div class="case-detail-text">In the FDA clinical study, GI Genius procedures achieved an <strong>adenoma detection rate of 55.1%</strong> compared to 42.0% for standard colonoscopy — a 13.1 percentage point improvement with direct patient safety implications.</div>
+          </div>
+          <div class="case-stat dl-stat">
+            <span class="case-stat-num">+13.1%</span>
+            <span class="case-stat-label">adenoma detection rate vs. standard procedure</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 3. Why Not the Other Way Around -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">Analysis</div>
+        <div class="section-heading">Why Each Approach Fails in the Other's Domain</div>
+      </div>
+    </div>
+    <div class="why-not-grid">
+      <div class="why-not-card">
+        <div class="why-not-header">
+          <span class="why-not-icon">🏠</span>
+          <span class="why-not-title">Deep Learning for Home Valuation</span>
+          <span class="why-not-badge dl">Poor Fit</span>
+        </div>
+        <div class="why-not-text">
+          Deep neural networks can model complex relationships, but home valuation depends on a limited set of interpretable, tabular features that lenders must justify to regulators. Deep learning adds computational cost and opacity without meaningful accuracy gains — a net negative in a compliance-driven domain where explainability is not optional.
+        </div>
+      </div>
+      <div class="why-not-card">
+        <div class="why-not-header">
+          <span class="why-not-icon">🏥</span>
+          <span class="why-not-title">Traditional ML for Polyp Detection</span>
+          <span class="why-not-badge ml">Poor Fit</span>
+        </div>
+        <div class="why-not-text">
+          Traditional ML would require experts to manually engineer visual features — edge detectors, texture descriptors — before classification. This approach fails to capture the subtle, high-dimensional patterns in colonoscopy video, does not scale to varying lighting and viewpoints, and cannot match the real-time performance a CNN delivers directly from raw frames.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Decision Framework -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">Framework</div>
+        <div class="section-heading">When to Choose Each Approach</div>
+      </div>
+    </div>
+    <table class="decision-table">
+      <thead>
+        <tr>
+          <th>Consideration</th>
+          <th class="ml-th">Traditional ML</th>
+          <th class="dl-th">Deep Learning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Data type</td>
+          <td><span class="check">✓</span> Structured, tabular</td>
+          <td><span class="check">✓</span> Unstructured (images, video, audio, text)</td>
+        </tr>
+        <tr>
+          <td>Feature engineering</td>
+          <td><span class="check">✓</span> Features are known and well-defined</td>
+          <td><span class="check">✓</span> Features are learned automatically from raw data</td>
+        </tr>
+        <tr>
+          <td>Interpretability</td>
+          <td><span class="check">✓</span> Required — regulated or auditable context</td>
+          <td><span class="cross">✗</span> Black-box acceptable if accuracy is the priority</td>
+        </tr>
+        <tr>
+          <td>Data volume</td>
+          <td><span class="check">✓</span> Works well with smaller datasets</td>
+          <td><span class="check">✓</span> Requires large datasets to generalize well</td>
+        </tr>
+        <tr>
+          <td>Compute requirements</td>
+          <td><span class="check">✓</span> Low — runs on standard hardware</td>
+          <td><span class="cross">✗</span> High — GPUs / TPUs often required</td>
+        </tr>
+        <tr>
+          <td>Real-world examples</td>
+          <td>Home valuation, fraud detection, churn prediction</td>
+          <td>Medical imaging, speech recognition, autonomous vehicles</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 5. Key Insights -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">Reflection</div>
+        <div class="section-heading">Key Insights</div>
+      </div>
+    </div>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-icon" style="background:var(--accent-pale);">🎯</div>
+        <div>
+          <div class="insight-title">Complexity Is Not Always Better</div>
+          <div class="insight-text">Deep learning is often seen as the more advanced approach, but for structured tabular data, it frequently underperforms simpler ML methods while requiring far more data, compute, and expertise. The best model is the simplest one that solves the problem reliably.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#EFF6FF;">⚖️</div>
+        <div>
+          <div class="insight-title">Interpretability Has Real Stakes</div>
+          <div class="insight-text">In regulated industries — mortgage lending, healthcare, criminal justice — a model that cannot explain its reasoning may be legally or ethically unusable, regardless of its accuracy. Choosing ML over deep learning is sometimes a compliance decision, not just a technical one.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#FFFBEB;">🔬</div>
+        <div>
+          <div class="insight-title">Real-World Validation Matters</div>
+          <div class="insight-text">The GI Genius system's +13.1% adenoma detection improvement is not a benchmark score — it is a clinical trial result that translates directly to patient outcomes. Grounding AI comparisons in real deployment data, not just academic benchmarks, produces more honest conclusions.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#F0FDF4;">🔗</div>
+        <div>
+          <div class="insight-title">Domain Knowledge Shapes Algorithm Selection</div>
+          <div class="insight-text">Neither ML nor deep learning can be selected without understanding the domain. A controls engineer building a predictive maintenance model on structured sensor data should reach for ML first. One building a vision system for defect detection should reach for a CNN. The domain determines the tool.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. References -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div>
+        <div class="section-title">Sources</div>
+        <div class="section-heading">References</div>
+      </div>
+    </div>
+    <div class="references">
+      <div class="ref-item">FDA. (2024, September 26). <em>FDA digital health and artificial intelligence glossary — Educational resource.</em> U.S. Food and Drug Administration.</div>
+      <div class="ref-item">Fannie Mae. (2016a, June 7). <em>Housing market effects of appraising below contract.</em></div>
+      <div class="ref-item">Fannie Mae. (2016b, October 28). <em>Contract price confirmation bias: Evidence from repeat appraisals.</em></div>
+      <div class="ref-item">U.S. Food and Drug Administration. (n.d.). <em>De novo summary (DEN200055): GI Genius.</em></div>
+    </div>
+  </div>
+
+  <!-- 7. Outcome -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div>
+        <div class="section-title">Impact</div>
+        <div class="section-heading">What This Demonstrates</div>
+      </div>
+    </div>
+    <div class="outcome-box">
+      <div class="outcome-heading">Principled AI Decision-Making</div>
+      <p class="outcome-text">
+        This paper demonstrates the ability to move beyond surface-level AI enthusiasm and think critically about <strong>which tool is right for which job</strong>. Selecting between ML and deep learning is not a prestige decision — it is an engineering decision that must account for data structure, interpretability requirements, regulatory context, and computational constraints.
+        <br/><br/>
+        As an Electronics Controls Engineer expanding into AI, this kind of principled algorithm selection is directly applicable to the real decisions I face: when building predictive models on structured engine sensor data, traditional ML is often the correct answer. When tackling vision-based defect detection in manufacturing, a CNN is. Knowing the difference — and being able to defend that choice with real-world evidence — is a foundational AI engineering competency.
+      </p>
+      <div class="outcome-metrics">
+        <div class="metric">
+          <div class="metric-val">2</div>
+          <div class="metric-label">Real-world case studies<br/>analysed in depth</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">+13.1%</div>
+          <div class="metric-label">Clinical improvement<br/>from deep learning (GI Genius)</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">4</div>
+          <div class="metric-label">Peer / institutional<br/>sources cited (APA 7th)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="page-footer">
+  <p>Somto Dera Anyaegbu · AIML-500: Machine Learning Fundamentals · Indiana Wesleyan University · March 2026</p>
+  <p style="margin-top:6px"><a href="index.html">← Return to Portfolio</a></p>
+</div>
+
+</body>
+</html>
