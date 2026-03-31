@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artifact 5: Adaptive Leadership Reflection | Somto Dera Anyaegbu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #B45309;
+      --accent-mid: #D97706;
+      --accent-light: #F59E0B;
+      --accent-pale: #FFFBEB;
+      --accent-border: rgba(180, 83, 9, 0.2);
+      --teal: #0F766E;
+      --teal-pale: #F0FDFA;
+      --teal-border: rgba(15, 118, 110, 0.2);
+      --bg: #FAFAFA;
+      --surface: #FFFFFF;
+      --border: #E5E7EB;
+      --text-primary: #111827;
+      --text-secondary: #6B7280;
+      --text-muted: #9CA3AF;
+      --font: 'Inter', system-ui, sans-serif;
+      --font-display: 'Playfair Display', Georgia, serif;
+    }
+
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); line-height: 1.7; font-size: 16px; }
+
+    /* topbar */
+    .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-secondary); font-size: 13px; font-weight: 500; transition: color 0.2s; }
+    .back-link:hover { color: var(--accent); }
+    .topbar-badge { font-size: 11px; font-weight: 600; color: var(--accent); background: var(--accent-pale); border: 1px solid var(--accent-border); border-radius: 20px; padding: 3px 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* hero */
+    .hero { background: linear-gradient(135deg, #1C1917 0%, #292524 50%, #1C1917 100%); padding: 72px 40px 64px; color: white; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 65% 50%, rgba(245,158,11,0.12) 0%, transparent 60%); }
+    .hero-content { position: relative; max-width: 800px; }
+    .hero-eyebrow { font-size: 11px; font-weight: 600; color: #FCD34D; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+    .hero-eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: #FCD34D; }
+    .hero h1 { font-family: var(--font-display); font-size: clamp(32px, 5vw, 52px); font-weight: 700; line-height: 1.15; color: #F9FAFB; margin-bottom: 20px; letter-spacing: -0.5px; }
+    .hero h1 span { color: #FCD34D; }
+    .hero-desc { font-size: 17px; color: #D1D5DB; max-width: 640px; line-height: 1.7; font-weight: 300; margin-bottom: 32px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 16px; }
+    .meta-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; font-size: 12px; color: #E5E7EB; }
+    .meta-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 64px 40px 80px; }
+
+    .section { margin-bottom: 64px; }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .section-num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: white; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .section-title { font-size: 13px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .section-heading { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; letter-spacing: -0.3px; }
+
+    /* thesis */
+    .thesis-box { background: var(--accent-pale); border: 1px solid var(--accent-border); border-left: 4px solid var(--accent); border-radius: 10px; padding: 24px 28px; }
+    .thesis-label { font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+    .thesis-text { font-size: 16px; color: var(--text-primary); line-height: 1.75; }
+    .thesis-text strong { color: var(--accent); }
+
+    /* challenge card */
+    .challenge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+    .card-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+    .card-label.challenge { color: #DC2626; }
+    .card-label.response { color: var(--teal); }
+    .card-text { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+
+    /* scripture blocks */
+    .scripture-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .scripture-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px; position: relative; overflow: hidden; }
+    .scripture-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+    .scripture-ref { font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 10px; font-family: var(--font-display); }
+    .scripture-quote { font-size: 14px; color: var(--text-secondary); line-height: 1.65; font-style: italic; margin-bottom: 12px; font-family: var(--font-display); }
+    .scripture-application { font-size: 13px; color: var(--text-primary); line-height: 1.6; }
+    .scripture-label { font-size: 10px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+
+    /* esther framework */
+    .esther-timeline { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 36px; }
+    .esther-steps { display: flex; flex-direction: column; gap: 0; }
+    .esther-step { display: flex; gap: 20px; padding-bottom: 28px; position: relative; }
+    .esther-step:last-child { padding-bottom: 0; }
+    .esther-step:not(:last-child)::before { content: ''; position: absolute; left: 19px; top: 40px; bottom: 0; width: 1px; background: var(--border); }
+    .esther-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; background: var(--accent-pale); border: 1.5px solid var(--accent-border); }
+    .esther-content { flex: 1; padding-top: 8px; }
+    .esther-title { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+    .esther-esther { font-size: 13px; color: var(--text-muted); font-style: italic; margin-bottom: 6px; }
+    .esther-apply { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* framework comparison */
+    .framework-table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .framework-table th { padding: 14px 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; text-align: left; }
+    .framework-table th:first-child { background: #F9FAFB; color: var(--text-muted); width: 28%; }
+    .framework-table th.col-northouse { background: var(--teal-pale); color: var(--teal); }
+    .framework-table th.col-biblical { background: var(--accent-pale); color: var(--accent); }
+    .framework-table td { padding: 13px 20px; font-size: 13.5px; color: var(--text-secondary); border-top: 1px solid var(--border); vertical-align: top; line-height: 1.55; }
+    .framework-table td:first-child { font-weight: 500; color: var(--text-primary); background: #FAFAFA; }
+
+    /* insights */
+    .insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .insight-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px; display: flex; gap: 14px; align-items: flex-start; }
+    .insight-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .insight-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; }
+    .insight-text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* references */
+    .references { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+    .ref-item { font-size: 13px; color: var(--text-secondary); line-height: 1.7; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .ref-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .ref-item:first-child { padding-top: 0; }
+
+    /* outcome */
+    .outcome-box { background: #1C1917; border-radius: 12px; padding: 40px; color: white; position: relative; overflow: hidden; }
+    .outcome-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #B45309 0%, #FCD34D 100%); }
+    .outcome-heading { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: #F9FAFB; margin-bottom: 16px; }
+    .outcome-text { font-size: 15px; color: #D1D5DB; line-height: 1.75; font-weight: 300; margin-bottom: 28px; }
+    .outcome-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; }
+    .metric { text-align: center; }
+    .metric-val { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: #FCD34D; line-height: 1; margin-bottom: 6px; }
+    .metric-label { font-size: 12px; color: #9CA3AF; line-height: 1.4; }
+
+    .page-footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); background: var(--surface); }
+    .page-footer p { font-size: 13px; color: var(--text-muted); }
+    .page-footer a { color: var(--accent); text-decoration: none; }
+    .page-footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .topbar, main { padding-left: 20px; padding-right: 20px; }
+      .hero { padding: 48px 20px; }
+      .challenge-grid, .scripture-grid, .insights-grid { grid-template-columns: 1fr; }
+      .scripture-grid { grid-template-columns: 1fr; }
+      .outcome-metrics { grid-template-columns: 1fr; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link">← Back to Portfolio</a>
+  <span class="topbar-badge">Artifact 5 · AIML-500</span>
+</div>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Artifact 5 — AIML-500: Machine Learning Fundamentals · IWU</div>
+    <h1><span>Adaptive Leadership</span><br/>in the Age of AI</h1>
+    <p class="hero-desc">
+      A reflective exploration of adaptive leadership through the lens of biblical wisdom — examining how faith, humility, and principled decision-making equip leaders to guide teams through change, uncertainty, and shifting priorities in AI-driven environments.
+    </p>
+    <div class="hero-meta">
+      <div class="meta-pill"><div class="meta-dot" style="background:#FCD34D"></div>Leadership Reflection</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#6EE7B7"></div>Adaptive Leadership Theory</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#93C5FD"></div>Biblical Foundations</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#F9A8D4"></div>March 2026 · IWU</div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- 1. Core Thesis -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">Thesis</div>
+        <div class="section-heading">The Central Argument</div>
+      </div>
+    </div>
+    <div class="thesis-box">
+      <div class="thesis-label">Core Reflection</div>
+      <div class="thesis-text">
+        Adaptive leadership is not simply a management technique — it is a disposition requiring <strong>emotional discipline, humility, and a willingness to change approach without abandoning core values.</strong> When grounded in biblical wisdom, adaptive leadership becomes something deeper: a practice of seeking God's guidance before acting, drawing courage from scripture, and leading with conviction even when outcomes are uncertain. The intersection of Northouse's adaptive leadership framework and biblical principles produces a more resilient, trustworthy, and human-centered model of leadership for navigating change in AI-driven organizations.
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. The Leadership Challenge -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">Context</div>
+        <div class="section-heading">The Leadership Challenge</div>
+      </div>
+    </div>
+    <div class="challenge-grid">
+      <div class="card">
+        <div class="card-label challenge">⚠ The Challenge</div>
+        <p class="card-text">
+          Helping others adjust to rapidly changing priorities while simultaneously maintaining quality, trust, and team morale. In fast-moving environments — particularly those involving AI adoption and organizational change — priorities shift faster than people can adapt, creating friction, anxiety, and disengagement if not led well.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-label response" style="color:var(--teal)">✓ The Response</div>
+        <p class="card-text">
+          Rather than defaulting to experience-driven quick fixes, the reflection surfaces a more grounded response: pray before acting, listen with humility, communicate clearly, seek input from others, and remain flexible in methods while holding firm to values. Adaptability is reframed not as weakness but as a <strong>disciplined leadership skill</strong>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Biblical Foundations -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">Framework</div>
+        <div class="section-heading">Biblical Wisdom Applied to Leadership</div>
+      </div>
+    </div>
+    <div class="scripture-grid">
+      <div class="scripture-card">
+        <div class="scripture-label">Foundation</div>
+        <div class="scripture-ref">James 1:5</div>
+        <div class="scripture-quote">"If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault."</div>
+        <div class="scripture-application">The starting point for adaptive leadership: seek wisdom from God before seeking solutions from experience. This slows reactive decision-making and replaces it with prayer, listening, and humility — particularly valuable when facing unfamiliar AI-driven challenges.</div>
+      </div>
+      <div class="scripture-card">
+        <div class="scripture-label">Courage</div>
+        <div class="scripture-ref">Esther 4:14</div>
+        <div class="scripture-quote">"And who knows but that you have come to your royal position for such a time as this?"</div>
+        <div class="scripture-application">Esther's story demonstrates that bold leadership requires both preparation and timing. She did not act impulsively, nor did she stay silent. Her courage was built through community, prayer, and discernment — a model for leaders who must make high-stakes decisions with incomplete information.</div>
+      </div>
+      <div class="scripture-card">
+        <div class="scripture-label">Trust</div>
+        <div class="scripture-ref">Proverbs 3:5–6</div>
+        <div class="scripture-quote">"Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him."</div>
+        <div class="scripture-application">A corrective to over-reliance on technical expertise. In AI leadership, the temptation is to trust algorithms, data, and personal experience above all else. Proverbs 3:5–6 reorients this — conviction and wisdom come from faith, not just competence.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Esther's Decision Framework -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">Case Study</div>
+        <div class="section-heading">Esther's Decision-Making Model</div>
+      </div>
+    </div>
+    <div class="esther-timeline">
+      <div class="esther-steps">
+        <div class="esther-step">
+          <div class="esther-icon">🙏</div>
+          <div class="esther-content">
+            <div class="esther-title">Seek wisdom before acting</div>
+            <div class="esther-esther">Esther: Called for fasting and prayer before approaching the king</div>
+            <div class="esther-apply">Application: Before addressing team resistance or shifting priorities, pause to pray and seek perspective. Reactive leadership under pressure erodes trust; deliberate leadership builds it.</div>
+          </div>
+        </div>
+        <div class="esther-step">
+          <div class="esther-icon">👥</div>
+          <div class="esther-content">
+            <div class="esther-title">Build support through community</div>
+            <div class="esther-esther">Esther: Asked Mordecai and the Jewish community to fast with her</div>
+            <div class="esther-apply">Application: Leaders navigating change should seek input and build alignment before acting unilaterally. Shared ownership of a decision increases both quality and morale.</div>
+          </div>
+        </div>
+        <div class="esther-step">
+          <div class="esther-icon">⏱️</div>
+          <div class="esther-content">
+            <div class="esther-title">Choose the right moment</div>
+            <div class="esther-esther">Esther: Did not present her request immediately — she waited for the right time</div>
+            <div class="esther-apply">Application: Timing matters in organizational change. Introducing AI initiatives or difficult priorities at the wrong moment amplifies resistance. Strategic patience is a form of adaptability.</div>
+          </div>
+        </div>
+        <div class="esther-step">
+          <div class="esther-icon">🚀</div>
+          <div class="esther-content">
+            <div class="esther-title">Act boldly when the moment comes</div>
+            <div class="esther-esther">Esther: Approached the king with courage, knowing the personal risk</div>
+            <div class="esther-apply">Application: After preparation and discernment, leaders must act — even when outcomes are uncertain. Adaptive leadership that never commits produces the same harm as leadership that never listens.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Northouse + Biblical Framework -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">Analysis</div>
+        <div class="section-heading">Adaptive Leadership Theory Meets Biblical Wisdom</div>
+      </div>
+    </div>
+    <table class="framework-table">
+      <thead>
+        <tr>
+          <th>Leadership Dimension</th>
+          <th class="col-northouse">Northouse (2022) — Theory</th>
+          <th class="col-biblical">Biblical Principle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Responding to change</td>
+          <td>Adaptive leaders adjust their approach to meet new challenges without losing direction</td>
+          <td>James 1:5 — Ask God for wisdom generously given; humility precedes effective adaptation</td>
+        </tr>
+        <tr>
+          <td>Emotional discipline</td>
+          <td>People notice whether a leader reacts under pressure or remains calm — it shapes team culture</td>
+          <td>Proverbs 3:5–6 — Leaning on God rather than one's own understanding produces steadiness</td>
+        </tr>
+        <tr>
+          <td>Courageous decisions</td>
+          <td>Adaptive leaders take calculated risks and act despite uncertainty</td>
+          <td>Esther 4:14 — Courage grows through preparation, community, and discernment of timing</td>
+        </tr>
+        <tr>
+          <td>Values-based flexibility</td>
+          <td>Methods can flex; core values must not. Adaptability is not relativism</td>
+          <td>Both frameworks agree: change your approach, not your convictions</td>
+        </tr>
+        <tr>
+          <td>Listening and input</td>
+          <td>Effective adaptive leaders seek input from others before deciding</td>
+          <td>Esther consulted Mordecai; wisdom literature consistently elevates counsel over solo judgment</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 6. Key Insights -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div>
+        <div class="section-title">Reflection</div>
+        <div class="section-heading">Key Insights</div>
+      </div>
+    </div>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-icon" style="background:var(--accent-pale);">🧭</div>
+        <div>
+          <div class="insight-title">Adaptability Is a Discipline, Not a Default</div>
+          <div class="insight-text">Adaptive leadership requires active effort — it does not happen automatically under pressure. The instinct to rely on past experience must be consciously interrupted by humility, prayer, and listening. This is especially relevant in AI contexts where rapid change can push leaders toward reactive decisions.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#F0FDFA;">🤝</div>
+        <div>
+          <div class="insight-title">Trust Is Built Through Consistency Under Pressure</div>
+          <div class="insight-text">How a leader behaves when priorities shift — whether they communicate clearly, stay calm, and remain fair — determines team trust more than any single decision. Adaptive leadership is ultimately about leading people, not just managing change processes.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#EFF6FF;">⚡</div>
+        <div>
+          <div class="insight-title">AI Amplifies the Need for Human-Centered Leadership</div>
+          <div class="insight-text">As AI automates more technical decisions, the distinctly human dimensions of leadership — emotional intelligence, ethical judgment, and values-based courage — become more valuable, not less. Adaptive leaders in AI-driven organizations must develop both technical fluency and relational wisdom.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#F5F3FF;">🌱</div>
+        <div>
+          <div class="insight-title">Faith and Competence Are Complementary</div>
+          <div class="insight-text">The reflection does not pit biblical wisdom against professional expertise — it integrates them. Praying for wisdom does not replace analytical thinking; it grounds it. This produces a more complete leader: one who brings both technical rigor and moral clarity to difficult decisions.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. References -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div>
+        <div class="section-title">Sources</div>
+        <div class="section-heading">References</div>
+      </div>
+    </div>
+    <div class="references">
+      <div class="ref-item">Northouse, P. G. (2022). <em>Leadership: Theory and practice</em> (9th ed.). Sage Publications.</div>
+      <div class="ref-item">The Holy Bible, New International Version. (2011). Zondervan. (Original work published 1978)</div>
+    </div>
+  </div>
+
+  <!-- 8. Outcome -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div>
+        <div class="section-title">Impact</div>
+        <div class="section-heading">What This Demonstrates</div>
+      </div>
+    </div>
+    <div class="outcome-box">
+      <div class="outcome-heading">Leadership That Integrates Faith, Theory, and Practice</div>
+      <p class="outcome-text">
+        This artifact demonstrates that effective AI leadership is not purely technical — it requires the kind of adaptive, values-grounded decision-making that no algorithm can replicate. By integrating Northouse's adaptive leadership framework with biblical principles, this reflection produces a model of leadership that is simultaneously <strong>theoretically informed, personally grounded, and practically applicable</strong>.
+        <br/><br/>
+        As someone leading at Cummins and moving deeper into AI, this is the leadership model I bring to teams navigating change: seek wisdom before acting, build alignment through listening, choose timing deliberately, and then act with courage. These are not soft skills — they are the competencies that determine whether an AI initiative succeeds or fails at the human level.
+      </p>
+      <div class="outcome-metrics">
+        <div class="metric">
+          <div class="metric-val">2</div>
+          <div class="metric-label">Frameworks integrated<br/>(Northouse + Biblical)</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">3</div>
+          <div class="metric-label">Scripture passages<br/>applied to leadership</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">4</div>
+          <div class="metric-label">Decision-making steps<br/>from Esther's model</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="page-footer">
+  <p>Somto Dera Anyaegbu · AIML-500: Machine Learning Fundamentals · Indiana Wesleyan University · March 2026</p>
+  <p style="margin-top:6px"><a href="index.html">← Return to Portfolio</a></p>
+</div>
+
+</body>
+</html>
