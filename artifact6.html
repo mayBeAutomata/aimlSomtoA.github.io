@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artifact 6: Clear Communication & Leadership | Somto Dera Anyaegbu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #0F766E;
+      --accent-mid: #0D9488;
+      --accent-light: #14B8A6;
+      --accent-pale: #F0FDFA;
+      --accent-border: rgba(15, 118, 110, 0.2);
+      --coral: #C2410C;
+      --coral-pale: #FFF7ED;
+      --coral-border: rgba(194, 65, 12, 0.2);
+      --bg: #FAFAFA;
+      --surface: #FFFFFF;
+      --border: #E5E7EB;
+      --text-primary: #111827;
+      --text-secondary: #6B7280;
+      --text-muted: #9CA3AF;
+      --font: 'Inter', system-ui, sans-serif;
+      --font-display: 'Playfair Display', Georgia, serif;
+    }
+
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); line-height: 1.7; font-size: 16px; }
+
+    /* topbar */
+    .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-secondary); font-size: 13px; font-weight: 500; transition: color 0.2s; }
+    .back-link:hover { color: var(--accent); }
+    .topbar-badge { font-size: 11px; font-weight: 600; color: var(--accent); background: var(--accent-pale); border: 1px solid var(--accent-border); border-radius: 20px; padding: 3px 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* hero */
+    .hero { background: linear-gradient(135deg, #042F2E 0%, #134E4A 50%, #042F2E 100%); padding: 72px 40px 64px; color: white; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 65% 50%, rgba(20,184,166,0.15) 0%, transparent 60%); }
+    .hero-content { position: relative; max-width: 800px; }
+    .hero-eyebrow { font-size: 11px; font-weight: 600; color: #5EEAD4; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+    .hero-eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: #5EEAD4; }
+    .hero h1 { font-family: var(--font-display); font-size: clamp(32px, 5vw, 52px); font-weight: 700; line-height: 1.15; color: #F9FAFB; margin-bottom: 20px; letter-spacing: -0.5px; }
+    .hero h1 span { color: #5EEAD4; }
+    .hero-desc { font-size: 17px; color: #D1D5DB; max-width: 640px; line-height: 1.7; font-weight: 300; margin-bottom: 32px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 16px; }
+    .meta-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; font-size: 12px; color: #E5E7EB; }
+    .meta-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 64px 40px 80px; }
+
+    .section { margin-bottom: 64px; }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .section-num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: white; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .section-title { font-size: 13px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .section-heading { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; letter-spacing: -0.3px; }
+
+    /* thesis */
+    .thesis-box { background: var(--accent-pale); border: 1px solid var(--accent-border); border-left: 4px solid var(--accent); border-radius: 10px; padding: 24px 28px; }
+    .thesis-label { font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+    .thesis-text { font-size: 16px; color: var(--text-primary); line-height: 1.75; }
+    .thesis-text strong { color: var(--accent); }
+
+    /* two col */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+    .card-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+    .card-label.problem { color: #DC2626; }
+    .card-label.solution { color: var(--accent); }
+    .card-text { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+
+    /* scripture blocks */
+    .scripture-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .scripture-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px; position: relative; overflow: hidden; }
+    .scripture-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+    .scripture-ref { font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 10px; font-family: var(--font-display); }
+    .scripture-quote { font-size: 14px; color: var(--text-secondary); line-height: 1.65; font-style: italic; margin-bottom: 14px; font-family: var(--font-display); }
+    .scripture-label { font-size: 10px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+    .scripture-application { font-size: 13px; color: var(--text-primary); line-height: 1.6; }
+
+    /* communication breakdown story */
+    .story-box { background: var(--coral-pale); border: 1px solid var(--coral-border); border-left: 4px solid var(--coral); border-radius: 10px; padding: 28px; }
+    .story-label { font-size: 11px; font-weight: 600; color: var(--coral); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+    .story-text { font-size: 15px; color: var(--text-secondary); line-height: 1.75; }
+    .story-text strong { color: var(--text-primary); font-weight: 500; }
+
+    /* action steps */
+    .steps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .step-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px; display: flex; gap: 16px; align-items: flex-start; }
+    .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-pale); border: 1.5px solid var(--accent-border); color: var(--accent); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; }
+    .step-text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* insights */
+    .insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .insight-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px; display: flex; gap: 14px; align-items: flex-start; }
+    .insight-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .insight-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; }
+    .insight-text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* references */
+    .references { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+    .ref-item { font-size: 13px; color: var(--text-secondary); line-height: 1.7; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .ref-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .ref-item:first-child { padding-top: 0; }
+
+    /* outcome */
+    .outcome-box { background: #042F2E; border-radius: 12px; padding: 40px; color: white; position: relative; overflow: hidden; }
+    .outcome-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #0F766E 0%, #5EEAD4 100%); }
+    .outcome-heading { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: #F9FAFB; margin-bottom: 16px; }
+    .outcome-text { font-size: 15px; color: #D1D5DB; line-height: 1.75; font-weight: 300; margin-bottom: 28px; }
+    .outcome-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; }
+    .metric { text-align: center; }
+    .metric-val { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: #5EEAD4; line-height: 1; margin-bottom: 6px; }
+    .metric-label { font-size: 12px; color: #9CA3AF; line-height: 1.4; }
+
+    .page-footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); background: var(--surface); }
+    .page-footer p { font-size: 13px; color: var(--text-muted); }
+    .page-footer a { color: var(--accent); text-decoration: none; }
+    .page-footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .topbar, main { padding-left: 20px; padding-right: 20px; }
+      .hero { padding: 48px 20px; }
+      .two-col, .scripture-grid, .steps-grid, .insights-grid { grid-template-columns: 1fr; }
+      .outcome-metrics { grid-template-columns: 1fr; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link">← Back to Portfolio</a>
+  <span class="topbar-badge">Artifact 6 · AIML-500</span>
+</div>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Artifact 6 -- AIML-500 · Indiana Wesleyan University</div>
+    <h1><span>Clear Communication</span><br/>as a Leadership Practice</h1>
+    <p class="hero-desc">
+      A reflective examination of how communication clarity shapes team trust, accountability, and performance, drawing on personal experience, biblical wisdom, and practical leadership strategies for AI-driven organizational contexts.
+    </p>
+    <div class="hero-meta">
+      <div class="meta-pill"><div class="meta-dot" style="background:#5EEAD4"></div>Leadership Reflection</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#FCD34D"></div>Communication &amp; Clarity</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#93C5FD"></div>Biblical Foundations</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#F9A8D4"></div>March 2026 · IWU</div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- 1. Core Thesis -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">Introduction</div>
+        <div class="section-heading">The Central Argument</div>
+      </div>
+    </div>
+    <div class="thesis-box">
+      <div class="thesis-label">Core Reflection</div>
+      <div class="thesis-text">
+        Effective leadership is inseparable from clear communication. <strong>Clarity is not about what a leader says; it is about what others actually understand.</strong> This distinction has practical consequences: unclear communication breaks trust, creates role confusion, and undermines accountability even when every individual is working hard. Drawing on Paul's teaching in 1 Corinthians and the cautionary story of the Tower of Babel, this reflection explores how purposeful, structured communication transforms leadership effectiveness and outlines concrete practices for building that clarity into everyday team interactions.
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. The Gap Between Saying and Being Understood -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">The Problem</div>
+        <div class="section-heading">The Gap Between Saying and Being Understood</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label problem">⚠ The Communication Gap</div>
+        <p class="card-text">
+          A common leadership blind spot: assuming that because something was said, it was understood. Instructions can be given confidently and still produce confusion if they lack specificity about roles, deadlines, and context. When team members fill in ambiguity with their own assumptions, misalignment multiplies, and the leader may not discover it until a deadline is missed or morale dips.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-label solution">✓ The Standard for Clarity</div>
+        <p class="card-text">
+          Real clarity is measured by the receiver, not the sender. A message is only clear when the other person can accurately restate priorities, responsibilities, and next steps in their own words. This shifts the responsibility of clarity from the audience back to the leader, opening the door to the door to verification, correction, and genuine alignment before problems arise.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Biblical Foundations -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">Framework</div>
+        <div class="section-heading">Biblical Wisdom on Communication</div>
+      </div>
+    </div>
+    <div class="scripture-grid">
+      <div class="scripture-card">
+        <div class="scripture-label">Purposeful Signal</div>
+        <div class="scripture-ref">1 Corinthians 14:8–9 (NIV)</div>
+        <div class="scripture-quote">"Again, if the trumpet does not sound a clear call, who will get ready for battle? So it is with you. Unless you speak intelligible words with your tongue, how will anyone know what you are saying?"</div>
+        <div class="scripture-application">Paul's metaphor is precise: unclear communication does not just slow a team down; it leaves people unable to act at all. The trumpet must sound a specific note. In leadership, this means every instruction needs a clear call to action, not just a general direction.</div>
+      </div>
+      <div class="scripture-card">
+        <div class="scripture-label">Cautionary Example</div>
+        <div class="scripture-ref">Genesis 11:6–7 (NIV)</div>
+        <div class="scripture-quote">"If as one people speaking the same language they have begun to do this, then nothing they plan to do will be impossible for them. Come, let us go down and confuse their language so they will not understand each other."</div>
+        <div class="scripture-application">The Tower of Babel illustrates how communication breakdown can halt progress even when motivation and resources are present. The problem was not a lack of effort or skill; it was the loss of shared understanding. Teams today face the same risk whenever communication is assumed rather than verified.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Real Experience -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">Case Study</div>
+        <div class="section-heading">When Unclear Communication Broke a Team</div>
+      </div>
+    </div>
+    <div class="story-box">
+      <div class="story-label">Personal Experience</div>
+      <div class="story-text">
+        A real team situation serves as the anchor for this reflection: instructions were given quickly without clearly assigning roles, and as a result, several people assumed someone else was handling critical tasks. <strong>Deadlines were missed. Frustration grew.</strong> Looking back, the root cause was not a lack of effort, commitment, or capability; it was a lack of clarity about who owned what and when.
+        <br/><br/>
+        This experience reveals a pattern common in fast-moving teams, especially those navigating new technology or shifting priorities: <strong>when communication is fast but vague, ambiguity fills the gap, producing confusion produces confusion, not collaboration.</strong> The lesson is not that teams need more communication, but that they need more purposeful communication, specifically communication that closes the gap between what was said and what was understood.
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Action Steps -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">Practice</div>
+        <div class="section-heading">Five Commitments for Clearer Leadership Communication</div>
+      </div>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Organize before communicating</div>
+          <div class="step-text">Structure thoughts before speaking or writing so that messages are direct and specific, not improvised and general. Clarity starts in the mind before it reaches the team.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Verify understanding explicitly</div>
+          <div class="step-text">Ask team members to restate key expectations in their own words after a briefing. This surfaces misunderstandings early, before they become missed deadlines or duplicated effort.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Connect tasks to purpose</div>
+          <div class="step-text">Help team members understand why their work matters, not just what they need to do. People who understand the purpose behind a task are more engaged, more accountable, and more likely to raise issues proactively.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Define roles and deadlines explicitly</div>
+          <div class="step-text">Never assume shared ownership of a task. At the end of every meeting or conversation, confirm who owns each next step and by when, and share a written summary to eliminate post-meeting drift.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div>
+          <div class="step-title">Follow up and invite feedback</div>
+          <div class="step-text">Check in after key communications and create space for team members to surface confusion without fear. A leader who is approachable about misunderstandings resolves them before they compound.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">6</div>
+        <div>
+          <div class="step-title">Model patience and servant leadership</div>
+          <div class="step-text">Clear communication is not just a process; it is an expression of expression of care. When leaders communicate with patience and intentionality, they signal that their team's understanding matters more than their own convenience.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Key Insights -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div>
+        <div class="section-title">Reflection</div>
+        <div class="section-heading">Key Insights</div>
+      </div>
+    </div>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-icon" style="background:var(--accent-pale);">📡</div>
+        <div>
+          <div class="insight-title">Clarity Is the Leader's Responsibility</div>
+          <div class="insight-text">When communication fails, it is tempting to blame the audience for not paying attention. But leadership thinking reframes this: if the team did not understand, the message was not clear enough. The standard for clarity is set by the receiver, not the sender.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#FFF7ED;">⚡</div>
+        <div>
+          <div class="insight-title">Speed and Clarity Are Often in Tension</div>
+          <div class="insight-text">Fast-moving environments create pressure to communicate quickly. But brevity without structure produces ambiguity. The most efficient path is often to slow down momentarily to clarify roles, confirm understanding, and share a written summary, avoiding the costly rework that confusion creates later.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#EFF6FF;">🤖</div>
+        <div>
+          <div class="insight-title">AI Teams Need Especially Clear Communication</div>
+          <div class="insight-text">In AI and ML projects, where tasks span data engineering, model development, deployment, and stakeholder reporting, vague role assignments are particularly costly. Miscommunication about who owns a pipeline step or a model evaluation can cascade into hours of duplicated or conflicting work.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#F5F3FF;">🌱</div>
+        <div>
+          <div class="insight-title">Trust Is Built Through Consistent Clarity</div>
+          <div class="insight-text">Teams that experience clear, reliable communication from their leader develop higher trust, stronger accountability, and greater confidence. Clarity is not just a tool for task management; it is the foundation of a culture where people can grow, take initiative, and contribute fully.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Tools & Technologies -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div>
+        <div class="section-title">Tools Used</div>
+        <div class="section-heading">Tools and Technologies</div>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px;">
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px 18px; display:flex; align-items:center; gap:14px;">
+        <div style="width:40px; height:40px; border-radius:8px; background:var(--accent-pale); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;">✍️</div>
+        <div>
+          <div style="font-size:14px; font-weight:600; color:var(--text-primary);">Academic Writing</div>
+          <div style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Reflective composition</div>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px 18px; display:flex; align-items:center; gap:14px;">
+        <div style="width:40px; height:40px; border-radius:8px; background:#FFFBEB; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;">📖</div>
+        <div>
+          <div style="font-size:14px; font-weight:600; color:var(--text-primary);">Biblical Literature</div>
+          <div style="font-size:12px; color:var(--text-secondary); margin-top:2px;">NIV, 1 Cor. &amp; Genesis</div>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px 18px; display:flex; align-items:center; gap:14px;">
+        <div style="width:40px; height:40px; border-radius:8px; background:#EFF6FF; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;">📝</div>
+        <div>
+          <div style="font-size:14px; font-weight:600; color:var(--text-primary);">Grammarly</div>
+          <div style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Editing &amp; clarity review</div>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px 18px; display:flex; align-items:center; gap:14px;">
+        <div style="width:40px; height:40px; border-radius:8px; background:#F5F3FF; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;">🗂️</div>
+        <div>
+          <div style="font-size:14px; font-weight:600; color:var(--text-primary);">APA 7th Edition</div>
+          <div style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Citation formatting</div>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px 18px; display:flex; align-items:center; gap:14px;">
+        <div style="width:40px; height:40px; border-radius:8px; background:#FFF7ED; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;">🔍</div>
+        <div>
+          <div style="font-size:14px; font-weight:600; color:var(--text-primary);">Critical Reflection</div>
+          <div style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Personal experience analysis</div>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px 18px; display:flex; align-items:center; gap:14px;">
+        <div style="width:40px; height:40px; border-radius:8px; background:var(--accent-pale); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;">🐙</div>
+        <div>
+          <div style="font-size:14px; font-weight:600; color:var(--text-primary);">GitHub Pages</div>
+          <div style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Portfolio hosting</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. References -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div>
+        <div class="section-title">Sources</div>
+        <div class="section-heading">References</div>
+      </div>
+    </div>
+    <div class="references">
+      <div class="ref-item">Holy Bible, New International Version. (2011). Zondervan. (Original work published 1973).</div>
+    </div>
+  </div>
+
+  <!-- 9. Outcome -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div>
+        <div class="section-title">Value Proposition</div>
+        <div class="section-heading">Why This Matters</div>
+      </div>
+    </div>
+    <div class="outcome-box">
+      <div class="outcome-heading">Communication as a Core Leadership Competency</div>
+      <p class="outcome-text">
+        This artifact demonstrates that strong AI and ML leadership requires more than technical fluency; it demands <strong>the ability to communicate with precision, purpose, and care.</strong> In environments where teams are navigating complex AI initiatives, shifting priorities, and interdisciplinary collaboration, the leader who communicates clearly becomes the single biggest factor in whether the team succeeds or stalls.
+        <br/><br/>
+        As an Electronics Controls Engineer at Cummins working toward deeper AI leadership, this reflection sharpens a commitment that goes beyond professional skill: to communicate in a way that builds trust, reduces confusion, and helps every team member contribute with confidence. The biblical principle holds as much in engineering as in scripture: <strong>if the trumpet does not sound a clear call, no one will know how to respond.</strong>
+      </p>
+      <div class="outcome-metrics">
+        <div class="metric">
+          <div class="metric-val">2</div>
+          <div class="metric-label">Biblical texts<br/>applied to leadership</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">6</div>
+          <div class="metric-label">Concrete communication<br/>commitments defined</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">1</div>
+          <div class="metric-label">Real team experience<br/>examined as a case study</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="page-footer">
+  <p>Somto Dera Anyaegbu · AIML-500 · Indiana Wesleyan University · March 2026</p>
+  <p style="margin-top:6px"><a href="index.html">← Return to Portfolio</a></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artifact 1: A* Puzzle Solver | Somto Dera Anyaegbu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #1D4ED8;
+      --accent-mid: #2563EB;
+      --accent-light: #3B82F6;
+      --accent-pale: #EFF6FF;
+      --accent-border: rgba(29, 78, 216, 0.2);
+      --bg: #FAFAFA;
+      --surface: #FFFFFF;
+      --border: #E5E7EB;
+      --text-primary: #111827;
+      --text-secondary: #6B7280;
+      --text-muted: #9CA3AF;
+      --crimson: #9B1C1C;
+      --font: 'Inter', system-ui, sans-serif;
+      --font-display: 'Playfair Display', Georgia, serif;
+    }
+
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); line-height: 1.7; font-size: 16px; }
+
+    /* topbar */
+    .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-secondary); font-size: 13px; font-weight: 500; transition: color 0.2s; }
+    .back-link:hover { color: var(--accent); }
+    .topbar-badge { font-size: 11px; font-weight: 600; color: var(--accent); background: var(--accent-pale); border: 1px solid var(--accent-border); border-radius: 20px; padding: 3px 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* hero */
+    .hero { background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #0F172A 100%); padding: 72px 40px 64px; color: white; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 65% 50%, rgba(99,102,241,0.2) 0%, transparent 60%); }
+    .hero-content { position: relative; max-width: 800px; }
+    .hero-eyebrow { font-size: 11px; font-weight: 600; color: #818CF8; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+    .hero-eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: #818CF8; }
+    .hero h1 { font-family: var(--font-display); font-size: clamp(32px, 5vw, 52px); font-weight: 700; line-height: 1.15; color: #F9FAFB; margin-bottom: 20px; letter-spacing: -0.5px; }
+    .hero h1 span { color: #818CF8; }
+    .hero-desc { font-size: 17px; color: #D1D5DB; max-width: 600px; line-height: 1.7; font-weight: 300; margin-bottom: 32px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 16px; }
+    .meta-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; font-size: 12px; color: #E5E7EB; }
+    .meta-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 64px 40px 80px; }
+
+    .section { margin-bottom: 64px; }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .section-num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: white; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .section-title { font-size: 13px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .section-heading { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; letter-spacing: -0.3px; }
+
+    /* problem/solution */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+    .card-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+    .card-label.problem { color: #DC2626; }
+    .card-label.solution { color: #15803D; }
+    .card-text { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+
+    /* puzzle grid demo */
+    .puzzle-demo { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 40px; }
+    .puzzle-row { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+    .puzzle-state { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .puzzle-label { font-size: 11px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .puzzle-grid { display: grid; grid-template-columns: repeat(3, 56px); grid-template-rows: repeat(3, 56px); gap: 4px; }
+    .puzzle-cell { width: 56px; height: 56px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; font-family: var(--font-display); }
+    .puzzle-cell.filled { background: #EFF6FF; border: 1.5px solid #BFDBFE; color: #1E40AF; }
+    .puzzle-cell.empty { background: #F3F4F6; border: 1.5px dashed #D1D5DB; }
+    .puzzle-cell.goal { background: #F0FDF4; border: 1.5px solid #BBF7D0; color: #166534; }
+    .puzzle-arrow { display: flex; align-items: center; padding: 0 8px; margin-top: 32px; font-size: 28px; color: var(--text-muted); }
+
+    /* algorithm flow */
+    .algo-flow { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 36px 32px; }
+    .algo-steps { display: flex; flex-direction: column; gap: 0; }
+    .algo-step { display: flex; gap: 20px; padding-bottom: 28px; position: relative; }
+    .algo-step:last-child { padding-bottom: 0; }
+    .algo-step:not(:last-child)::before { content: ''; position: absolute; left: 19px; top: 40px; bottom: 0; width: 1px; background: var(--border); }
+    .algo-step-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; border: 1.5px solid var(--accent-border); background: var(--accent-pale); }
+    .algo-step-content { flex: 1; padding-top: 8px; }
+    .algo-step-title { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .algo-step-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+    .algo-formula { display: inline-block; margin-top: 8px; padding: 6px 14px; background: #1E1B4B; color: #C7D2FE; border-radius: 6px; font-family: monospace; font-size: 13px; letter-spacing: 0.05em; }
+
+    /* heuristic visual */
+    .heuristic-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .heuristic-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px; }
+    .h-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+    .h-name { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .h-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .h-tag { display: inline-block; margin-top: 10px; padding: 3px 10px; background: var(--accent-pale); border: 1px solid var(--accent-border); border-radius: 4px; font-size: 11px; color: var(--accent); font-weight: 600; }
+
+    /* insights */
+    .insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .insight-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px; display: flex; gap: 14px; align-items: flex-start; }
+    .insight-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .insight-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; }
+    .insight-text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* tech stack */
+    .stack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .stack-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 18px; display: flex; align-items: center; gap: 14px; }
+    .stack-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .stack-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    .stack-role { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+    /* outcome */
+    .outcome-box { background: #0F172A; border-radius: 12px; padding: 40px; color: white; position: relative; overflow: hidden; }
+    .outcome-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #6366F1 0%, #818CF8 100%); }
+    .outcome-heading { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: #F9FAFB; margin-bottom: 16px; }
+    .outcome-text { font-size: 15px; color: #D1D5DB; line-height: 1.75; font-weight: 300; margin-bottom: 28px; }
+    .outcome-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; }
+    .metric { text-align: center; }
+    .metric-val { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: #818CF8; line-height: 1; margin-bottom: 6px; }
+    .metric-label { font-size: 12px; color: #9CA3AF; line-height: 1.4; }
+
+    .page-footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); background: var(--surface); }
+    .page-footer p { font-size: 13px; color: var(--text-muted); }
+    .page-footer a { color: var(--accent); text-decoration: none; }
+    .page-footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .topbar, main { padding-left: 20px; padding-right: 20px; }
+      .hero { padding: 48px 20px; }
+      .two-col, .insights-grid, .stack-grid, .heuristic-cards { grid-template-columns: 1fr; }
+      .outcome-metrics { grid-template-columns: 1fr; gap: 16px; }
+      .puzzle-row { gap: 12px; }
+      .puzzle-arrow { margin-top: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link">← Back to Portfolio</a>
+  <span class="topbar-badge">Artifact 1 · ITCS-6150</span>
+</div>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Artifact 1 -- Intelligent Systems · UNC Charlotte</div>
+    <h1><span>A* Algorithm:</span><br/>Solving the 8-Tile Puzzle</h1>
+    <p class="hero-desc">
+      An implementation of the A* search algorithm to optimally solve the classic 8-tile sliding puzzle -- demonstrating informed search, heuristic design, and algorithmic thinking at the intersection of AI and optimization.
+    </p>
+    <div class="hero-meta">
+      <div class="meta-pill"><div class="meta-dot" style="background:#818CF8"></div>Guaranteed Optimal Solution</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#6EE7B7"></div>Python · Jupyter Notebook</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#93C5FD"></div>Informed Search · Heuristics</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#FCD34D"></div>Fall 2021</div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- 1. Problem & Solution -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">Context</div>
+        <div class="section-heading">Problem &amp; Solution</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label problem">⚠ The Problem</div>
+        <p class="card-text">
+          The 8-tile puzzle has over 180,000 possible states. A brute-force search is computationally wasteful -- it explores too many dead ends and cannot guarantee finding the shortest solution path in a reasonable time. A smarter approach is needed.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-label solution">✓ The Solution</div>
+        <p class="card-text">
+          A* search combines the actual cost of reaching a state with a <strong>heuristic estimate</strong> of the remaining distance to the goal. This guides the search intelligently, guaranteeing the optimal (shortest) solution while exploring far fewer states than uninformed methods.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Puzzle Visualization -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">The Challenge</div>
+        <div class="section-heading">From Scrambled to Solved</div>
+      </div>
+    </div>
+    <div class="puzzle-demo">
+      <div class="puzzle-row">
+        <div class="puzzle-state">
+          <div class="puzzle-label">Start State</div>
+          <div class="puzzle-grid">
+            <div class="puzzle-cell filled">7</div>
+            <div class="puzzle-cell filled">2</div>
+            <div class="puzzle-cell filled">4</div>
+            <div class="puzzle-cell filled">5</div>
+            <div class="puzzle-cell empty"></div>
+            <div class="puzzle-cell filled">6</div>
+            <div class="puzzle-cell filled">8</div>
+            <div class="puzzle-cell filled">3</div>
+            <div class="puzzle-cell filled">1</div>
+          </div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">Scrambled configuration</div>
+        </div>
+        <div class="puzzle-arrow">→</div>
+        <div class="puzzle-state">
+          <div class="puzzle-label">A* Search</div>
+          <div style="width:130px; text-align:center; padding: 20px 0;">
+            <div style="font-size:28px; margin-bottom:8px;">🔍</div>
+            <div style="font-size:12px; color:var(--text-secondary); line-height:1.5;">Explores states<br/>guided by <em>f(n) = g(n) + h(n)</em></div>
+          </div>
+        </div>
+        <div class="puzzle-arrow">→</div>
+        <div class="puzzle-state">
+          <div class="puzzle-label">Goal State</div>
+          <div class="puzzle-grid">
+            <div class="puzzle-cell goal">1</div>
+            <div class="puzzle-cell goal">2</div>
+            <div class="puzzle-cell goal">3</div>
+            <div class="puzzle-cell goal">4</div>
+            <div class="puzzle-cell goal">5</div>
+            <div class="puzzle-cell goal">6</div>
+            <div class="puzzle-cell goal">7</div>
+            <div class="puzzle-cell goal">8</div>
+            <div class="puzzle-cell empty"></div>
+          </div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">Optimal path found ✓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Algorithm Flow -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">Architecture</div>
+        <div class="section-heading">How A* Works</div>
+      </div>
+    </div>
+    <div class="algo-flow">
+      <div class="algo-steps">
+        <div class="algo-step">
+          <div class="algo-step-icon">🏁</div>
+          <div class="algo-step-content">
+            <div class="algo-step-title">Initialize the Open List</div>
+            <div class="algo-step-desc">Start with the initial puzzle state in a priority queue (open list). Assign it a cost score based on the heuristic function.</div>
+            <div class="algo-formula">f(start) = 0 + h(start)</div>
+          </div>
+        </div>
+        <div class="algo-step">
+          <div class="algo-step-icon">🎯</div>
+          <div class="algo-step-content">
+            <div class="algo-step-title">Select the Best Node</div>
+            <div class="algo-step-desc">Always expand the state with the lowest f(n) score. This is what makes A* informed -- it prioritizes promising paths over arbitrary ones.</div>
+            <div class="algo-formula">f(n) = g(n) + h(n)</div>
+          </div>
+        </div>
+        <div class="algo-step">
+          <div class="algo-step-icon">🔀</div>
+          <div class="algo-step-content">
+            <div class="algo-step-title">Generate Successor States</div>
+            <div class="algo-step-desc">Slide the blank tile in all valid directions (up, down, left, right) to generate neighboring states. Each move increments the actual path cost g(n) by 1.</div>
+          </div>
+        </div>
+        <div class="algo-step">
+          <div class="algo-step-icon">📊</div>
+          <div class="algo-step-content">
+            <div class="algo-step-title">Evaluate with Heuristic</div>
+            <div class="algo-step-desc">Score each successor using the chosen heuristic (Manhattan Distance or Misplaced Tiles). Add to the open list if not already explored with a lower cost.</div>
+          </div>
+        </div>
+        <div class="algo-step">
+          <div class="algo-step-icon">✅</div>
+          <div class="algo-step-content">
+            <div class="algo-step-title">Goal Check &amp; Path Reconstruction</div>
+            <div class="algo-step-desc">When the goal state is dequeued, the algorithm terminates. Trace back through parent pointers to reconstruct the full optimal solution path.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Heuristics -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">Design Decision</div>
+        <div class="section-heading">Heuristic Functions Compared</div>
+      </div>
+    </div>
+    <div class="heuristic-cards">
+      <div class="heuristic-card">
+        <div class="h-label">Heuristic 1</div>
+        <div class="h-name">Misplaced Tiles</div>
+        <div class="h-desc">Counts how many tiles are not in their goal position. Simple to compute but weaker -- it underestimates true distance because it ignores how far out of place each tile actually is.</div>
+        <div class="h-tag">Admissible · Less Informed</div>
+      </div>
+      <div class="heuristic-card">
+        <div class="h-label">Heuristic 2 -- Preferred</div>
+        <div class="h-name">Manhattan Distance</div>
+        <div class="h-desc">Sums the horizontal and vertical distance each tile must travel to reach its goal position. More informed than misplaced tiles -- explores fewer nodes and finds the solution faster while still guaranteeing optimality.</div>
+        <div class="h-tag" style="background:#F0FDF4; border-color:rgba(21,128,61,0.25); color:#15803D;">Admissible · More Informed ✓</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Key Insights -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">Reflection</div>
+        <div class="section-heading">Key Insights</div>
+      </div>
+    </div>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#EFF6FF;">🧭</div>
+        <div>
+          <div class="insight-title">Heuristic Quality Determines Performance</div>
+          <div class="insight-text">Manhattan Distance dramatically outperforms Misplaced Tiles in nodes explored. Choosing a better heuristic -- one closer to true cost without overestimating -- is the single biggest lever for performance in informed search.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#F0FDF4;">⚖️</div>
+        <div>
+          <div class="insight-title">Admissibility Is Non-Negotiable</div>
+          <div class="insight-text">A* only guarantees an optimal solution when the heuristic never overestimates the true remaining cost. Understanding why admissibility matters -- and how to verify it -- is a foundational AI engineering skill.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#FFFBEB;">🌐</div>
+        <div>
+          <div class="insight-title">Search Space Structure Matters</div>
+          <div class="insight-text">The 8-puzzle has ~181,440 reachable states. Without intelligent search, exploring them all is computationally intractable. A* with Manhattan Distance typically finds optimal solutions in a fraction of those states.</div>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon" style="background:#F5F3FF;">🔗</div>
+        <div>
+          <div class="insight-title">Transferable to Real Engineering Problems</div>
+          <div class="insight-text">A* and its principles -- cost functions, state space search, heuristic design -- are directly applicable to robotics path planning, SLAM, game AI, and route optimization. This project built the intuition behind those real-world systems.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Tech Stack -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div>
+        <div class="section-title">Implementation</div>
+        <div class="section-heading">Technology Stack</div>
+      </div>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-card">
+        <div class="stack-icon" style="background:#EFF6FF;">🐍</div>
+        <div>
+          <div class="stack-name">Python 3</div>
+          <div class="stack-role">Core implementation</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:#FFFBEB;">📓</div>
+        <div>
+          <div class="stack-name">Jupyter Notebook</div>
+          <div class="stack-role">Interactive analysis</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:#F0FDF4;">📦</div>
+        <div>
+          <div class="stack-name">heapq</div>
+          <div class="stack-role">Priority queue (open list)</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:#F5F3FF;">🧮</div>
+        <div>
+          <div class="stack-name">Manhattan Distance</div>
+          <div class="stack-role">Heuristic function</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:#FEF2F2;">🔢</div>
+        <div>
+          <div class="stack-name">State Space Search</div>
+          <div class="stack-role">AI search methodology</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon" style="background:#F0FDF4;">🐙</div>
+        <div>
+          <div class="stack-name">GitHub</div>
+          <div class="stack-role">Version control</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Outcome -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div>
+        <div class="section-title">Value Proposition</div>
+        <div class="section-heading">Why This Matters</div>
+      </div>
+    </div>
+    <div class="outcome-box">
+      <div class="outcome-heading">Algorithmic Thinking for Real-World AI</div>
+      <p class="outcome-text">
+        The A* Puzzle Solver demonstrates my ability to implement foundational AI search algorithms from first principles -- not just as a coding exercise, but with a clear understanding of <strong>why</strong> the design choices matter. Choosing between heuristics, managing the open/closed list, and ensuring admissibility requires the kind of rigorous analytical thinking that translates directly to robotics, path planning, and embedded AI systems.
+        <br/><br/>
+        As an Electronics Controls Engineer working on intelligent automation at Cummins, the principles here -- optimal search, cost-aware decision making, state space modeling -- are the theoretical backbone of the real-world control and AI systems I work on daily.
+      </p>
+      <div class="outcome-metrics">
+        <div class="metric">
+          <div class="metric-val">181K+</div>
+          <div class="metric-label">Possible puzzle<br/>states</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">2</div>
+          <div class="metric-label">Heuristics<br/>implemented &amp; compared</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">100%</div>
+          <div class="metric-label">Optimal solutions<br/>guaranteed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="page-footer">
+  <p>Somto Dera Anyaegbu · ITCS-6150 Intelligent Systems · UNC Charlotte · Fall 2021</p>
+  <p style="margin-top:6px"><a href="index.html">← Return to Portfolio</a> &nbsp;|&nbsp; <a href="https://github.com/mayBeAutomata/ITCS6150-IntelligentSystems/tree/main/proj1" target="_blank">View Source on GitHub →</a></p>
+</div>
+
+</body>
+</html>
