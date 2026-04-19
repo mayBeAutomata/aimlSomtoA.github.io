@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artifact 7: Commercial Applications of AI Newsletter | Somto Dera Anyaegbu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --accent: #B91C1C; --accent-mid: #DC2626; --accent-light: #EF4444;
+      --accent-pale: #FEF2F2; --accent-border: rgba(185,28,28,0.2);
+      --bg: #FAFAFA; --surface: #FFFFFF; --border: #E5E7EB;
+      --text-primary: #111827; --text-secondary: #6B7280; --text-muted: #9CA3AF;
+      --font: 'Inter', system-ui, sans-serif;
+      --font-display: 'Playfair Display', Georgia, serif;
+    }
+    body { font-family: var(--font); background: var(--bg); color: var(--text-primary); line-height: 1.7; font-size: 16px; }
+
+    .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-secondary); font-size: 13px; font-weight: 500; }
+    .back-link:hover { color: var(--accent); }
+    .topbar-badge { font-size: 11px; font-weight: 600; color: var(--accent); background: var(--accent-pale); border: 1px solid var(--accent-border); border-radius: 20px; padding: 3px 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    .hero { background: linear-gradient(135deg, #450A0A 0%, #7F1D1D 50%, #450A0A 100%); padding: 72px 40px 64px; color: white; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 65% 50%, rgba(239,68,68,0.15) 0%, transparent 60%); }
+    .hero-content { position: relative; max-width: 800px; }
+    .hero-eyebrow { font-size: 11px; font-weight: 600; color: #FCA5A5; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+    .hero-eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: #FCA5A5; }
+    .hero h1 { font-family: var(--font-display); font-size: clamp(32px, 5vw, 52px); font-weight: 700; line-height: 1.15; color: #F9FAFB; margin-bottom: 20px; letter-spacing: -0.5px; }
+    .hero h1 span { color: #FCA5A5; }
+    .hero-desc { font-size: 17px; color: #D1D5DB; max-width: 600px; line-height: 1.7; font-weight: 300; margin-bottom: 32px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 16px; }
+    .meta-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; font-size: 12px; color: #E5E7EB; }
+    .meta-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 64px 40px 80px; }
+
+    /* Feedback banner */
+    .feedback-banner { background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 12px; padding: 20px 24px; margin-bottom: 52px; }
+    .feedback-banner-label { font-size: 11px; font-weight: 600; color: #15803D; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .feedback-banner-label::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #15803D; }
+    .feedback-items { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .feedback-item { background: white; border: 1px solid #D1FAE5; border-radius: 8px; padding: 14px 16px; }
+    .feedback-reviewer { font-size: 11px; font-weight: 600; color: #15803D; margin-bottom: 5px; }
+    .feedback-original { font-size: 12px; color: var(--text-muted); margin-bottom: 7px; font-style: italic; line-height: 1.5; }
+    .feedback-change { font-size: 12px; color: var(--text-secondary); line-height: 1.55; }
+    .arrow { color: #15803D; font-weight: 700; margin-right: 4px; }
+
+    /* Sections */
+    .section { margin-bottom: 56px; }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; border-bottom: 2px solid var(--border); padding-bottom: 14px; }
+    .section-num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: white; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .section-label { font-size: 11px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase; }
+    .section-heading { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.3px; }
+
+    /* Subsections */
+    .subsection { margin-bottom: 32px; }
+    .subsection-heading { font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; padding-left: 12px; border-left: 3px solid var(--accent); }
+    .body-text { font-size: 15px; color: var(--text-secondary); line-height: 1.8; }
+    .body-text strong { color: var(--text-primary); }
+    .body-text p { margin-bottom: 12px; }
+    .body-text p:last-child { margin-bottom: 0; }
+
+    /* Audience box */
+    .audience-box { background: var(--accent-pale); border: 1px solid var(--accent-border); border-radius: 10px; padding: 18px 22px; margin-top: 18px; }
+    .audience-label { font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 7px; }
+    .audience-text { font-size: 14px; color: var(--text-primary); line-height: 1.65; }
+
+    /* Industry tiles */
+    .industry-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 20px; }
+    .industry-tile { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+    .tile-icon { font-size: 22px; margin-bottom: 8px; }
+    .tile-name { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+    .tile-finding { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+    .tile-stat { font-size: 12px; font-weight: 600; color: var(--accent); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+
+    /* Process steps */
+    .process-steps { display: flex; flex-direction: column; gap: 12px; }
+    .process-step { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; display: flex; gap: 16px; }
+    .step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--accent-pale); color: var(--accent); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .step-body { flex: 1; }
+    .step-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .step-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+    .decision-note { background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 6px; padding: 9px 13px; font-size: 12px; color: #78350F; line-height: 1.55; }
+    .decision-note strong { color: #92400E; }
+
+    /* Tools */
+    .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; display: flex; align-items: center; gap: 12px; }
+    .tool-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .tool-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .tool-role { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+    /* Value Proposition */
+    .value-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .value-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 26px; position: relative; overflow: hidden; }
+    .value-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+    .value-card-label { font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+    .value-card-text { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+    .value-card-text strong { color: var(--text-primary); }
+    .value-card-text p { margin-bottom: 12px; }
+    .value-card-text p:last-child { margin-bottom: 0; }
+
+    /* Metrics */
+    .metrics-box { background: #450A0A; border-radius: 12px; padding: 36px 40px; margin-top: 24px; position: relative; overflow: hidden; }
+    .metrics-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #B91C1C 0%, #FCA5A5 100%); }
+    .metrics-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .metric { text-align: center; }
+    .metric-val { font-family: var(--font-display); font-size: 30px; font-weight: 700; color: #FCA5A5; line-height: 1; margin-bottom: 6px; }
+    .metric-label { font-size: 12px; color: #9CA3AF; line-height: 1.4; }
+
+    /* References */
+    .ref-list { list-style: none; }
+    .ref-item { font-size: 13px; color: var(--text-secondary); line-height: 1.7; padding: 10px 0 10px 28px; text-indent: -28px; border-bottom: 1px solid var(--border); }
+    .ref-item:last-child { border-bottom: none; }
+    .ref-item a { color: var(--accent); text-decoration: none; }
+    .ref-item a:hover { text-decoration: underline; }
+
+    .page-footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); background: var(--surface); }
+    .page-footer p { font-size: 13px; color: var(--text-muted); }
+    .page-footer a { color: var(--accent); text-decoration: none; }
+    .page-footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .topbar, main { padding-left: 20px; padding-right: 20px; }
+      .hero { padding: 48px 20px; }
+      .feedback-items, .industry-row, .tools-grid, .value-grid, .metrics-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link">&#8592; Back to Portfolio</a>
+  <span class="topbar-badge">Artifact 7 &middot; AIML-500</span>
+</div>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Artifact 7 &middot; AIML-500 &middot; Indiana Wesleyan University</div>
+    <h1><span>Commercial Applications of AI:</span><br/>An Industry Newsletter</h1>
+    <p class="hero-desc">
+      A professional newsletter examining how AI is being deployed in real business workflows across healthcare, financial services, and supply chain logistics -- written for practitioners who need to understand operational impact, decision support, and governance beyond the hype.
+    </p>
+    <div class="hero-meta">
+      <div class="meta-pill"><div class="meta-dot" style="background:#FCA5A5"></div>Applied AI</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#FCD34D"></div>Industry Analysis</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#93C5FD"></div>Technical Writing</div>
+      <div class="meta-pill"><div class="meta-dot" style="background:#86EFAC"></div>Spring 2026</div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- Feedback Integration -->
+  <div class="feedback-banner">
+    <div class="feedback-banner-label">Feedback Integration -- Workshop 5 Peer Review</div>
+    <div class="feedback-items">
+      <div class="feedback-item">
+        <div class="feedback-reviewer">Sri Charan Ponnam</div>
+        <div class="feedback-original">"Adding clear section labels like Objective, Value, or Relevance could make it even better."</div>
+        <div class="feedback-change"><span class="arrow">&#8594;</span>This artifact uses the exact required template labels throughout: Introduction, Objective, Process, Tools and Technologies Used, Unique Value, and Relevance -- each as a clearly marked subsection.</div>
+      </div>
+      <div class="feedback-item">
+        <div class="feedback-reviewer">Imaobong Nkitma</div>
+        <div class="feedback-original">"Make personal contributions and decision-making more explicit -- why you chose a specific approach."</div>
+        <div class="feedback-change"><span class="arrow">&#8594;</span>Each process step now includes a personal decision note explaining the specific reasoning behind that choice, grounding the work in my own engineering judgment rather than just describing what was done.</div>
+      </div>
+      <div class="feedback-item">
+        <div class="feedback-reviewer">Manish Yegurla</div>
+        <div class="feedback-original">"Connect the artifacts more directly to your target audience."</div>
+        <div class="feedback-change"><span class="arrow">&#8594;</span>A dedicated Target Audience callout is included under Objective, and the Relevance section explicitly names the engineering and leadership roles this artifact serves, with direct ties to regulated industries.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. Introduction -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-label">Section One</div>
+        <div class="section-heading">Introduction</div>
+      </div>
+    </div>
+    <div class="body-text">
+      <p>Commercial AI is entering a more pragmatic phase. The most significant recent launches are not headline-grabbing demos or generic chatbots -- they are <strong>purpose-built workflow products</strong> designed to fit within real business processes, harness enterprise data, and deliver sharper decisions around revenue, service, speed, and risk.</p>
+      <p>This newsletter examines three industries -- healthcare, financial services, and supply chain logistics -- where AI is being embedded directly into daily operational work. Across all three, one theme stands out: <strong>the most successful commercial AI applications do not replace human judgment, they empower it.</strong> By minimizing administrative friction and surfacing actionable insights faster, these solutions elevate both productivity and decision quality.</p>
+      <p>This artifact was produced to demonstrate the ability to track, interpret, and communicate the business implications of emerging AI deployments for a professional audience -- moving beyond technical implementation to analyze real-world operational impact and the governance frameworks that make AI trustworthy in regulated environments.</p>
+    </div>
+  </div>
+
+  <!-- 2. Description -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-label">Section Two</div>
+        <div class="section-heading">Description</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-heading">Objective</div>
+      <div class="body-text">
+        <p>The objective of this newsletter was to produce a professionally formatted, research-grounded analysis of recent commercial AI releases for a non-specialist but professionally informed readership. The specific goal was to move beyond product announcements and answer three practical questions for each case: what business process changed, how was decision-making affected, and what near-term value was unlocked.</p>
+        <p>Three verticals were selected because they represent industries where AI is being embedded into <strong>safety-critical, regulated, or operationally complex workflows</strong> -- the types of environments most relevant to my background as an Electronics Controls Engineer and my target field of AI for regulated industry applications.</p>
+      </div>
+      <div class="audience-box">
+        <div class="audience-label">Target Audience</div>
+        <div class="audience-text">This newsletter is written for <strong>engineering leaders, operations professionals, and AI practitioners</strong> in regulated industries -- particularly those in automotive, healthcare, financial services, and logistics who are evaluating where and how to deploy AI responsibly. It is also relevant to fellow students and program alumni learning to connect graduate-level AI coursework to real commercial adoption patterns.</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-heading">Process</div>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Industry and Release Selection</div>
+            <div class="step-desc">Scanned commercial AI news from March and April 2026 to identify releases that represented genuine workflow integration, not just product announcements or capability demonstrations. Three industries were chosen based on operational complexity and regulatory context.</div>
+            <div class="decision-note"><strong>My decision:</strong> I deliberately excluded general-purpose AI assistants and focused only on domain-specific deployments. A healthcare chatbot that answers FAQs is not the same as AI embedded in a revenue-cycle workflow. That distinction matters for practitioners in regulated environments, and I wanted the newsletter to reflect the same rigor I apply when evaluating AI integration at Cummins.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Primary Source Research and Verification</div>
+            <div class="step-desc">Sourced all claims directly from company press releases, investor relations announcements, and official newsroom publications. No secondary aggregators or opinion-based sources were used.</div>
+            <div class="decision-note"><strong>My decision:</strong> Primary sources only was a deliberate editorial choice. In regulated industries like healthcare and finance, unverified AI performance claims can influence real decisions with serious consequences. I applied the same standard I would to engineering documentation: cite the source, verify the number, and do not extrapolate beyond what the data actually supports.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Analytical Framework Application</div>
+            <div class="step-desc">Applied a consistent three-question framework to each case: what business process changed, how was decision-making affected, and what is the near-term operational upside. The same framework was applied across all three industries to enable comparison.</div>
+            <div class="decision-note"><strong>My decision:</strong> The framework was my own design, developed specifically for this newsletter. I chose it because it mirrors how I think about automation proposals at Cummins -- not "what does this AI do" but "where does it fit in the process, and does it move the decision point closer to the person who needs to act on it." That framing makes AI analysis useful to engineers rather than just interesting to read.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Newsletter Format and APA Citation</div>
+            <div class="step-desc">Structured the final output in newsletter format with at-a-glance industry summary tables, individual case analysis sections, and a synthesis section on cross-industry themes. All seven sources cited in APA 7th edition format.</div>
+            <div class="decision-note"><strong>My decision:</strong> I chose the newsletter format over a traditional research paper because the target audience for commercial AI analysis is practitioners, not academics. The at-a-glance summary tables serve someone who needs to brief a team quickly; the deeper case sections serve someone who needs the full analysis. That dual structure was intentional and designed for the specific reader this artifact addresses.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-heading">Key Findings by Industry</div>
+      <div class="industry-row">
+        <div class="industry-tile">
+          <div class="tile-icon">🏥</div>
+          <div class="tile-name">Healthcare</div>
+          <div class="tile-finding">UiPath's agentic AI suite embeds into revenue-cycle workflows, handling medical record summarization, prior authorization, and claim denial prevention within governed, auditable pipelines.</div>
+          <div class="tile-stat">90% reduction in average record review time -- 70 min to 6 min (medlitix)</div>
+        </div>
+        <div class="industry-tile">
+          <div class="tile-icon">🏦</div>
+          <div class="tile-name">Financial Services</div>
+          <div class="tile-finding">Bank of America automates advisor meeting prep and follow-up. Visa opens a single integration for AI-mediated commercial transactions with spend controls and tokenization baked in.</div>
+          <div class="tile-stat">53% of U.S. businesses open to AI-to-AI negotiation under defined conditions (Visa research)</div>
+        </div>
+        <div class="industry-tile">
+          <div class="tile-icon">🚚</div>
+          <div class="tile-name">Supply Chain</div>
+          <div class="tile-finding">project44 runs 29 AI-driven workflows continuously across its network. KION deploys autonomous industrial trucks in live warehouses, validated through digital twin testing before rollout.</div>
+          <div class="tile-stat">Nearly 1 million automated carrier communications for visibility quality (project44)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-heading">Tools and Technologies Used</div>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="tool-icon" style="background:var(--accent-pale);">📝</div>
+          <div>
+            <div class="tool-name">Microsoft Word</div>
+            <div class="tool-role">Document composition and formatting</div>
+          </div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="background:#EFF6FF;">🔍</div>
+          <div>
+            <div class="tool-name">Primary Source Research</div>
+            <div class="tool-role">Press releases, newsrooms, investor relations</div>
+          </div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="background:#F0FDF4;">✏️</div>
+          <div>
+            <div class="tool-name">Grammarly</div>
+            <div class="tool-role">Grammar and clarity review</div>
+          </div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="background:#FEF9C3;">📋</div>
+          <div>
+            <div class="tool-name">APA 7th Edition</div>
+            <div class="tool-role">Citation and reference formatting</div>
+          </div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="background:#F5F3FF;">📊</div>
+          <div>
+            <div class="tool-name">Custom Analytical Framework</div>
+            <div class="tool-role">Three-question workflow impact model</div>
+          </div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="background:#FEF2F2;">📰</div>
+          <div>
+            <div class="tool-name">Newsletter Format</div>
+            <div class="tool-role">At-a-glance tables and structured case analysis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Value Proposition -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-label">Section Three</div>
+        <div class="section-heading">Value Proposition</div>
+      </div>
+    </div>
+
+    <div class="value-grid">
+      <div class="value-card">
+        <div class="value-card-label">Unique Value</div>
+        <div class="value-card-text">
+          <p>This newsletter demonstrates a capability distinct from building AI systems: <strong>the ability to evaluate, contextualize, and communicate what real commercial AI deployments mean for practitioners in regulated environments.</strong></p>
+          <p>Most AI portfolios demonstrate technical implementation. This artifact demonstrates something equally critical for senior technical roles: the ability to read the landscape of commercial AI adoption, separate operational substance from hype, and translate findings into language that informs engineering and leadership decisions.</p>
+          <p>The analytical framework I applied here -- what process changed, how decision-making shifted, what governance is in place -- maps directly to how I assess AI readiness for integration into safety-critical embedded control systems at Cummins. That cross-domain transfer of thinking is the core of what makes this artifact valuable.</p>
+        </div>
+      </div>
+      <div class="value-card">
+        <div class="value-card-label">Relevance</div>
+        <div class="value-card-text">
+          <p>For <strong>engineering teams, AI practitioners, and organizational leaders</strong> evaluating AI in regulated industries, this artifact demonstrates that I can operate at the intersection of technical understanding and operational strategy -- not just building AI, but advising on when, where, and how to deploy it responsibly.</p>
+          <p>The three industries analyzed -- healthcare, financial services, and logistics -- all share characteristics with automotive embedded systems: regulated environments, safety-critical decisions, and a need for AI that is auditable, interpretable, and robust under real-world operational conditions.</p>
+          <p>This work also demonstrates communication range: the ability to write for a professional, non-specialist audience without sacrificing technical accuracy -- a skill that becomes increasingly essential as AI moves from research labs into operational engineering teams and executive decision-making.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="metrics-box">
+      <div class="metrics-row">
+        <div class="metric">
+          <div class="metric-val">3</div>
+          <div class="metric-label">Industries analyzed<br/>with operational depth</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">7</div>
+          <div class="metric-label">Primary sources cited<br/>in APA 7th edition</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">90%</div>
+          <div class="metric-label">Workflow time reduction<br/>documented in healthcare case</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. References -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-label">Section Four</div>
+        <div class="section-heading">References</div>
+      </div>
+    </div>
+    <ul class="ref-list">
+      <li class="ref-item">Bank of America. (2026, March 26). <em>Merrill and Bank of America Private Bank launch AI-powered meeting journey.</em> <a href="https://newsroom.bankofamerica.com/content/newsroom/press-releases/2026/03/merrill-and-bank-of-america-private-bank-launch-ai-powered-meeti.html" target="_blank">https://newsroom.bankofamerica.com</a></li>
+      <li class="ref-item">KION Group. (2026, March 16). <em>KION brings physical AI into live warehouse operations at GTC 2026 in San Jose, California.</em> <a href="https://www.kiongroup.com/en/News-Stories/Press-Releases/Press-Releases-Detail.html?id=1099696911" target="_blank">https://www.kiongroup.com</a></li>
+      <li class="ref-item">project44. (2026a, April 7). <em>project44 launches Network Operations Agent to maintain visibility compliance and improve data accuracy.</em> <a href="https://www.project44.com/press-releases/project44-launches-network-operations-agent-to-maintain-visibility-compliance-and-improve-data-accuracy/" target="_blank">https://www.project44.com</a></li>
+      <li class="ref-item">project44. (2026b, April 8). <em>project44 launches AI agent portfolio at decision44, built on a decade of context, skills, and orchestration.</em> <a href="https://www.project44.com/press-releases/project44-launches-ai-agent-portfolio-at-decision44-built-on-a-decade-of-context-skills-and-orchestration/" target="_blank">https://www.project44.com</a></li>
+      <li class="ref-item">UiPath. (2026, March 26). <em>Agentic AI Summit 2026 highlights: From platform to production.</em> <a href="https://www.uipath.com/blog/ai/agentic-ai-summit-2026" target="_blank">https://www.uipath.com</a></li>
+      <li class="ref-item">Visa. (2026a, April 2). <em>Visa defines the next era of commerce: When AI becomes the customer.</em> <a href="https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.22266.html" target="_blank">https://usa.visa.com</a></li>
+      <li class="ref-item">Visa. (2026b, April 8). <em>Visa opens the door to AI-driven shopping for businesses worldwide.</em> <a href="https://investor.visa.com/news/news-details/2026/Visa-Opens-the-Door-to-AI-Driven-Shopping-for-Businesses-Worldwide/default.aspx" target="_blank">https://investor.visa.com</a></li>
+    </ul>
+  </div>
+
+</main>
+
+<div class="page-footer">
+  <p>Somto Dera Anyaegbu &middot; AIML-500 &middot; Indiana Wesleyan University &middot; Spring 2026</p>
+  <p style="margin-top:6px"><a href="index.html">&#8592; Return to Portfolio</a></p>
+</div>
+
+</body>
+</html>
